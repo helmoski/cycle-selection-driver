@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "umd",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "strict": true
+  },
+  "include": [
+    "./src/"
+  ]
+}

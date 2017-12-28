@@ -4,7 +4,11 @@
   "description": "A Cycle.js Driver for interacting with the [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server --open",
+    "lint": "tslint --format stylish --project ./tsconfig.json src/**/*.ts",
+    "start": "run-s dev",
+    "test": "run-s lint test:*",
+    "test:unit": "nyc mocha --opts ./mocha.opts --check-coverage --lines 100 --functions 100 --branches 100"
   },
   "repository": {
     "type": "git",
@@ -15,5 +19,41 @@
   "bugs": {
     "url": "https://github.com/helmoski/cycle-selection-driver/issues"
   },
-  "homepage": "https://github.com/helmoski/cycle-selection-driver#readme"
+  "homepage": "https://github.com/helmoski/cycle-selection-driver#readme",
+  "devDependencies": {
+    "@types/chai": "^4.0.10",
+    "@types/mocha": "^2.2.45",
+    "chai": "^4.1.2",
+    "clean-webpack-plugin": "^0.1.17",
+    "html-webpack-plugin": "^2.30.1",
+    "mocha": "^4.0.1",
+    "npm-run-all": "^4.1.2",
+    "nyc": "^11.4.1",
+    "source-map-support": "^0.5.0",
+    "ts-loader": "^3.2.0",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.8.0",
+    "tslint-clean-code": "^0.2.2",
+    "tslint-config-airbnb": "^5.4.2",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  }
 }
