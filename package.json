@@ -4,6 +4,7 @@
   "description": "A Cycle.js Driver for interacting with the [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection)",
   "main": "index.js",
   "scripts": {
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "dev": "webpack-dev-server --open",
     "lint": "tslint --format stylish --project ./tsconfig.json src/**/*.ts",
     "start": "run-s dev",
@@ -25,6 +26,7 @@
     "@types/mocha": "^2.2.45",
     "chai": "^4.1.2",
     "clean-webpack-plugin": "^0.1.17",
+    "coveralls": "^3.0.0",
     "html-webpack-plugin": "^2.30.1",
     "mocha": "^4.0.1",
     "npm-run-all": "^4.1.2",
