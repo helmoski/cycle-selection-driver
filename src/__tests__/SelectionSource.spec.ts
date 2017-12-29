@@ -22,9 +22,9 @@ describe('SelectionSource', () => {
       selectionSource
         .selections()
         .addListener({
-          next: noop,
-          error: noop,
           complete: noop,
+          error: noop,
+          next: noop,
         });
       expect(document.addEventListener).to.have.been.calledWith('selectionchange');
     });
@@ -36,9 +36,9 @@ describe('SelectionSource', () => {
       };
       const selectionSource = new SelectionSource(document as any);
       const listener = {
-        next: stub(),
-        error: stub(),
-        complete: stub(),
+        complete: noop,
+        error: noop,
+        next: noop,
       };
       selectionSource
         .selections()
@@ -60,9 +60,9 @@ describe('SelectionSource', () => {
         document.getSelection.onSecondCall().returns(selection2);
         const selectionSource = new SelectionSource(document as any);
         const listener = {
+          complete: noop,
+          error: noop,
           next: stub(),
-          error: stub(),
-          complete: stub(),
         };
         selectionSource
           .selections()
