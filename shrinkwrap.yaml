@@ -1,6 +1,14 @@
+dependencies:
+  '@cycle/run': 4.1.0
+  lodash: 4.17.4
+  xstream: 11.1.0
 devDependencies:
   '@types/chai': 4.0.10
+  '@types/lodash': 4.14.91
   '@types/mocha': 2.2.45
+  '@types/node': 8.5.2
+  '@types/sinon': 4.1.2
+  '@types/sinon-chai': 2.7.29
   chai: 4.1.2
   clean-webpack-plugin: 0.1.17
   coveralls: 3.0.0
@@ -8,20 +16,37 @@ devDependencies:
   mocha: 4.0.1
   npm-run-all: 4.1.2
   nyc: 11.4.1
+  sinon: 4.1.3
+  sinon-chai: 2.14.0
   source-map-support: 0.5.0
   ts-loader: 3.2.0
   ts-node: 4.1.0
   tslint: 5.8.0
   tslint-clean-code: 0.2.2
   tslint-config-airbnb: 5.4.2
+  tslint-consistent-codestyle: 1.11.0
+  tslint-eslint-rules: 4.1.1
+  tslint-microsoft-contrib: 5.0.1
   typescript: 2.6.2
   webpack: 3.10.0
   webpack-dev-server: 2.9.7
 packages:
+  /@cycle/run/4.1.0:
+    dependencies:
+      xstream: 11.1.0
+    dev: false
+    engines:
+      node: '>=0.12.0'
+    resolution:
+      integrity: sha512-QkLW1CIgTnjR4rTMPs0Cx8NyzVJzlKthZdhbmVM8H7MXY1AdqU1ZCq8MSGd3WN5yvP+1Cyr39LVJ+ZtX4K5xkg==
   /@types/chai/4.0.10:
     dev: true
     resolution:
       integrity: sha512-Ejh1AXTY8lm+x91X/yar3G2z4x9RyKwdTVdyyu7Xj3dNB35fMNCnEWqTO9FgS3zjzlRNqk1MruYhgb8yhRN9rA==
+  /@types/lodash/4.14.91:
+    dev: true
+    resolution:
+      integrity: sha512-k+nc3moSlAaXacyvz4/c6D9lnUeI6AKsLvkXFuNzUEEqMw7sjDnLW2GqlJ4nyFgMX/p+QzvVG6zRoDo4lJIV5g==
   /@types/mocha/2.2.45:
     dependencies:
       '@types/node': 8.5.2
@@ -32,6 +57,17 @@ packages:
     dev: true
     resolution:
       integrity: sha512-KA4GKOpgXnrqEH2eCVhiv2CsxgXGQJgV1X0vsGlh+WCnxbeAE1GT44ZsTU1IN5dEeV/gDupKa7gWo08V5IxWVQ==
+  /@types/sinon-chai/2.7.29:
+    dependencies:
+      '@types/chai': 4.0.10
+      '@types/sinon': 4.1.2
+    dev: true
+    resolution:
+      integrity: sha512-EkI/ZvJT4hglWo7Ipf9SX+J+R9htNOMjW8xiOhce7+0csqvgoF5IXqY5Ae1GqRgNtWCuaywR5HjVa1snkTqpOw==
+  /@types/sinon/4.1.2:
+    dev: true
+    resolution:
+      integrity: sha512-fL6bJHYRzbw/7ofbKiJ65SOAasoe5mZhHNSYKxWsF3sGl/arhRwDPwXJqM1xofKNTQD14HNX9VruicM7pm++mQ==
   /@types/strip-bom/3.0.0:
     dev: true
     resolution:
@@ -1444,6 +1480,12 @@ packages:
       node: '>= 0.12'
     resolution:
       integrity: sha1-b7lPvXGIUwbXPRXMSX/kzE7NRL8=
+  /formatio/1.2.0:
+    dependencies:
+      samsam: 1.3.0
+    dev: true
+    resolution:
+      integrity: sha1-87IWfZBoxGmKjVH092CjmlTYGOs=
   /forwarded/0.1.2:
     dev: true
     engines:
@@ -2110,6 +2152,10 @@ packages:
       '0': node >=0.6.0
     resolution:
       integrity: sha1-MT5mvB5cwG5Di8G3SZwuXFastqI=
+  /just-extend/1.1.27:
+    dev: true
+    resolution:
+      integrity: sha512-mJVp13Ix6gFo3SBAy9U/kL+oeZqzlYYYLQBwXVBlVzIsZwBqGREnOro24oC/8s8aox+rJhtZ2DiQof++IrkA+g==
   /killable/1.0.0:
     dev: true
     resolution:
@@ -2216,8 +2262,11 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-K1aLJl7slExtnA3pw9u7ygNUzY4=
-  /lodash/4.17.4:
+  /lodash.get/4.4.2:
     dev: true
+    resolution:
+      integrity: sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
+  /lodash/4.17.4:
     resolution:
       integrity: sha1-eCA6TRwyiuHYbcpkYONptX9AVa4=
   /log-driver/1.2.5:
@@ -2232,6 +2281,14 @@ packages:
       node: '>= 0.6.0'
     resolution:
       integrity: sha1-rgyqVhERSYxboTcj1vtjHSQAOTQ=
+  /lolex/1.6.0:
+    dev: true
+    resolution:
+      integrity: sha1-OpoCg0UqR9dDnnJzG54H1zhuSfY=
+  /lolex/2.3.1:
+    dev: true
+    resolution:
+      integrity: sha512-mQuW55GhduF3ppo+ZRUTz1PRjEh1hS5BbqU7d8D0ez2OKxHDod7StPPeAVKisZR5aLkHZjdGWSL42LSONUJsZw==
   /longest/1.0.1:
     dev: true
     engines:
@@ -2480,6 +2537,16 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-KzJxhOiZIQEXeyhWP7XnECrNDKk=
+  /nise/1.2.0:
+    dependencies:
+      formatio: 1.2.0
+      just-extend: 1.1.27
+      lolex: 1.6.0
+      path-to-regexp: 1.7.0
+      text-encoding: 0.6.4
+    dev: true
+    resolution:
+      integrity: sha512-q9jXh3UNsMV28KeqI43ILz5+c3l+RiNW8mhurEwCKckuHQbL+hTJIKKTiUlCPKlgQ/OukFvSnKB/Jk3+sFbkGA==
   /no-case/2.3.2:
     dependencies:
       lower-case: 1.1.4
@@ -2816,6 +2883,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
+  /path-to-regexp/1.7.0:
+    dependencies:
+      isarray: 0.0.1
+    dev: true
+    resolution:
+      integrity: sha1-Wf3g9DW62suhA6hOnTvGTpa5k30=
   /path-type/1.1.0:
     dependencies:
       graceful-fs: 4.1.11
@@ -3268,6 +3341,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-kKvNJn6Mm93gAczWVJg7wH+wGYWNrDHdWvpUmHyEsgCtIwwo3bqPtV4tR5tuPaUhTOo/kvhVwd8XwwOllGYkbg==
+  /samsam/1.3.0:
+    dev: true
+    resolution:
+      integrity: sha512-1HwIYD/8UlOtFS3QO3w7ey+SdSDFE4HRNLZoZRYVQefrOY3l17epswImeB1ijgJFQJodIaHcwkp3r/myBjFVbg==
   /select-hose/2.0.0:
     dev: true
     resolution:
@@ -3383,6 +3460,25 @@ packages:
     dev: true
     resolution:
       integrity: sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
+  /sinon-chai/2.14.0:
+    dev: true
+    peerDependencies:
+      chai: '>=1.9.2 <5'
+      sinon: ^1.4.0 || ^2.1.0 || ^3.0.0 || ^4.0.0
+    resolution:
+      integrity: sha512-9stIF1utB0ywNHNT7RgiXbdmen8QDCRsrTjw+G9TgKt1Yexjiv8TOWZ6WHsTPz57Yky3DIswZvEqX8fpuHNDtQ==
+  /sinon/4.1.3:
+    dependencies:
+      diff: 3.4.0
+      formatio: 1.2.0
+      lodash.get: 4.4.2
+      lolex: 2.3.1
+      nise: 1.2.0
+      supports-color: 4.5.0
+      type-detect: 4.0.5
+    dev: true
+    resolution:
+      integrity: sha512-c7u0ZuvBRX1eXuB4jN3BRCAOGiUTlM8SE3TxbJHrNiHUKL7wonujMOB6Fi1gQc00U91IscFORQHDga/eccqpbw==
   /sntp/2.1.0:
     dependencies:
       hoek: 4.2.0
@@ -3646,12 +3742,22 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-vnoN5ITexcXN34s9WRJQRJEvY1s=
+  /symbol-observable/1.0.4:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-Kb9hXUqnEhvdiYsi1LP5vE4qoD0=
   /tapable/0.2.8:
     dev: true
     engines:
       node: '>=0.6'
     resolution:
       integrity: sha1-mTcqXJmb8t8WCvwNdL7U9HlIzSI=
+  /text-encoding/0.6.4:
+    dev: true
+    resolution:
+      integrity: sha1-45mpgiV6J22uQou5KEXLcb3CbRk=
   /through/2.3.8:
     dev: true
     resolution:
@@ -4157,6 +4263,11 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-ZGV4SKIP/F31g6Qq2KJ3tFErvE0=
+  /xstream/11.1.0:
+    dependencies:
+      symbol-observable: 1.0.4
+    resolution:
+      integrity: sha512-3xFreYPNXbuEeWv0CP2FKP4u9QmCz63m8Fpqga5kujQRWn6k5yP2XIsFZmvE2ycb84I8sixpYCUMfmt8KIKn9g==
   /xtend/4.0.1:
     dev: true
     engines:
@@ -4238,21 +4349,33 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 4
 shrinkwrapVersion: 3
 specifiers:
+  '@cycle/run': ^4.1.0
   '@types/chai': ^4.0.10
+  '@types/lodash': ^4.14.91
   '@types/mocha': ^2.2.45
+  '@types/node': ^8.5.2
+  '@types/sinon': ^4.1.2
+  '@types/sinon-chai': ^2.7.29
   chai: ^4.1.2
   clean-webpack-plugin: ^0.1.17
   coveralls: ^3.0.0
   html-webpack-plugin: ^2.30.1
+  lodash: ^4.17.4
   mocha: ^4.0.1
   npm-run-all: ^4.1.2
   nyc: ^11.4.1
+  sinon: ^4.1.3
+  sinon-chai: ^2.14.0
   source-map-support: ^0.5.0
   ts-loader: ^3.2.0
   ts-node: ^4.1.0
   tslint: ^5.8.0
   tslint-clean-code: ^0.2.2
   tslint-config-airbnb: ^5.4.2
+  tslint-consistent-codestyle: ^1.11.0
+  tslint-eslint-rules: ^4.1.1
+  tslint-microsoft-contrib: ^5.0.1
   typescript: ^2.6.2
   webpack: ^3.10.0
   webpack-dev-server: ^2.9.7
+  xstream: ^11.1.0

@@ -1,12 +1,16 @@
 import { expect } from 'chai';
-import { hello } from '../index';
 
 import 'mocha';
 
-describe('Hello function', () => {
+import * as index from '../index';
 
-  it('should return hello world', () => {
-    const result = hello();
-    expect(result).to.equal('Hello world!');
+describe('index', () => {
+  it('exports the expected items', () => {
+    expect(Object.keys(index)).to.deep.equal([
+      'ISelection',
+      'ISelectionSource',
+      'selectionDriver',
+      'SelectionSource',
+    ]);
   });
 });
