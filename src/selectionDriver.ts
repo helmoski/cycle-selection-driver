@@ -1,5 +1,4 @@
 import { Driver } from '@cycle/run';
-import { isUndefined } from 'lodash';
 import { Stream } from 'xstream';
 
 import { ISelection } from './ISelection';
@@ -10,7 +9,7 @@ let document: Document;
 
 export function selectionDriver(): ISelectionSource {
   /* istanbul ignore if */
-  if (isUndefined(document)) {
+  if (document === undefined) {
     document = window.document;
   }
 

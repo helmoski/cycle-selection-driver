@@ -18,12 +18,6 @@ module.exports = {
     ]
   },
   externals: {
-    lodash: {
-      commonjs: 'lodash',
-      commonjs2: 'lodash',
-      amd: 'lodash',
-      root: '_',
-    },
     '@cycle/run': {
       commonjs: '@cycle/run',
       commonjs2: '@cycle/run',
