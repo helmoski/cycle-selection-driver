@@ -14,7 +14,7 @@
     "clean:test-site": "rm -Rf ./test-site/dist",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "tslint --format stylish --project ./tsconfig.json ./src/**/*.ts",
-    "prepublishonly": "run-s build:prod",
+    "prepublishOnly": "run-s build:prod",
     "serve:test-site": "http-server ./test-site/dist",
     "start": "run-s build:dev build:test-site serve:test-site",
     "test": "run-s lint test:*",
