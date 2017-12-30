@@ -25,7 +25,7 @@ export default function app(sources: ISources): ISinks {
           { attrs: { contenteditable: true } },
           'This is an editable region.',
         ),
-        label({ attrs: { for: 'currentSelection' } } , 'Current Selection'),
+        label({ attrs: { for: 'current-selection' } } , 'Current Selection'),
         br(),
         textarea(
           '#current-selection',
