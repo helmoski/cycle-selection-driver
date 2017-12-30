@@ -2,7 +2,8 @@
   "name": "cycle-selection-driver",
   "version": "0.0.1",
   "description": "A Cycle.js Driver for interacting with the [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection)",
-  "main": "index.js",
+  "main": "dist/cycle-selection-driver.js",
+  "module": "dist/cycle-selection-driver.js",
   "scripts": {
     "build:dev": "webpack",
     "build:test-site": "webpack --config ./test-site/webpack.config.js",
@@ -11,13 +12,12 @@
     "clean:dist": "rm -Rf dist",
     "clean:test-site": "rm -Rf ./test-site/dist",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "webpack-dev-server --config ./test-site/webpack.config.js --open",
-    "lint": "tslint --format stylish --project ./tsconfig.json ./src/**/*.ts ./e2e/**/*.ts ./test-site/**/*.ts",
+    "lint": "tslint --format stylish --project ./tsconfig.json ./src/**/*.ts",
     "serve:test-site": "http-server ./test-site/dist",
-    "start": "run-s dev",
+    "start": "run-s build:dev build:test-site serve:test-site",
     "test": "run-s lint test:*",
     "test:unit": "nyc --check-coverage --lines 100 --functions 100 --branches 100 mocha --opts ./mocha.opts",
-    "test:e2e": "run-s build:test-site && run-p -r \"serve:test-site --silent\" nightwatch",
+    "test:e2e": "run-s build:prod build:test-site && run-p -r \"serve:test-site --silent\" nightwatch",
     "nightwatch": "nightwatch"
   },
   "repository": {

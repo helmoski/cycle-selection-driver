@@ -2,7 +2,7 @@ import { br, div, h1, label, MainDOMSource, p, textarea, VNode } from '@cycle/do
 import { isNull } from 'lodash';
 import xstream, { Stream } from 'xstream';
 
-import { ISelection, ISelectionSource } from '../src/index';
+import { ISelection, ISelectionSource } from '../dist/cycle-selection-driver';
 
 interface ISources {
   DOM: MainDOMSource;

@@ -1,7 +1,7 @@
 import { makeDOMDriver } from '@cycle/dom';
 import { run } from '@cycle/run';
 
-import { selectionDriver } from '../src/index';
+import { selectionDriver } from '../dist/cycle-selection-driver.js';
 import app from './app';
 
 export default function main() {

@@ -7,6 +7,9 @@
     "strict": false
   },
   "include": [
-    "./src/**/*.ts"
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "./dist/**/*"
   ]
 }
