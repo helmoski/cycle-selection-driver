@@ -2,7 +2,7 @@ const editableParagraphId = '#editable-paragraph';
 const currentSelectionId = '#current-selection';
 
 module.exports = {
-  'Keyboard selection' : function (client) {
+  'Test keyboard selection' : function (client) {
     client
       .url('http://localhost:8080')
       .pause(1000);
