@@ -74,3 +74,6 @@ A [`Selection`](https://developer.mozilla.org/en-US/docs/Web/API/Selection) obje
 
 It is recommended that you avoid using the mutational methods of the `Selection` object because doing so would constitute as a side effect. Although the `selectionDriver` is currently readonly, it could be updated in the future to accept a sink that would allow mutations to the current selection.
 
+---
+
+Find other Cycle.js libraries and resources at [Awesome Cycle.js](https://github.com/cyclejs-community/awesome-cyclejs)
