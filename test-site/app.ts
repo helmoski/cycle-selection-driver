@@ -20,11 +20,15 @@ export default function app(sources: ISources): ISinks {
       return div([
         h1('Test Page'),
         p('This page is used for functionally testing cycle-selection-driver.'),
-        p({ attrs: { contenteditable: true } }, 'This is an editable region.'),
+        p(
+          '#editable-paragraph',
+          { attrs: { contenteditable: true } },
+          'This is an editable region.',
+        ),
         label({ attrs: { for: 'currentSelection' } } , 'Current Selection'),
         br(),
         textarea(
-          '#currentSelection',
+          '#current-selection',
           { attrs: { readonly: 'readonly' } },
           isNull(selection) ? 'Nothing selected' : selection.toString(),
         ),

@@ -19,7 +19,7 @@ module.exports = {
         "enabled": false,
       },
       "globals": {
-        "waitForConditionTimeout": 5000
+        "waitForConditionTimeout": 5000,
       },
       "desiredCapabilities": {
         "browserName": "chrome",
@@ -28,6 +28,7 @@ module.exports = {
           "args": [
             "headless",
             "disable-gpu",
+            "window-size=1280,800"
           ],
         }
       }

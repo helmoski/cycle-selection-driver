@@ -17,7 +17,7 @@
     "start": "run-s dev",
     "test": "run-s lint test:*",
     "test:unit": "nyc --check-coverage --lines 100 --functions 100 --branches 100 mocha --opts ./mocha.opts",
-    "test:e2e": "run-s build:test-site && run-p -r serve:test-site nightwatch",
+    "test:e2e": "run-s build:test-site && run-p -r \"serve:test-site --silent\" nightwatch",
     "nightwatch": "nightwatch"
   },
   "repository": {
