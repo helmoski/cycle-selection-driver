@@ -1,6 +1,6 @@
 # cycle-selection-driver
 
-A Cycle.js driver for interacting with the [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection)
+A [Cycle.js](https://cycle.js.org) driver for interacting with the [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection)
 
 [![NPM version](https://img.shields.io/npm/v/cycle-selection-driver.svg)](https://www.npmjs.com/package/cycle-selection-driver)
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
