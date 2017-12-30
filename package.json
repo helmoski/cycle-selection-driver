@@ -4,6 +4,7 @@
   "description": "A Cycle.js Driver for interacting with the [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection)",
   "main": "dist/cycle-selection-driver.js",
   "module": "dist/cycle-selection-driver.js",
+  "files": [],
   "scripts": {
     "build:dev": "webpack",
     "build:test-site": "webpack --config ./test-site/webpack.config.js",
