@@ -1,6 +1,5 @@
 node_modules
 dist
-!test-site/dist
 *.log
 .nyc_output
 coverage
