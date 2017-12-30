@@ -1,6 +1,6 @@
 {
   "name": "cycle-selection-driver",
-  "version": "0.0.4-2",
+  "version": "0.0.4-3",
   "description": "A Cycle.js Driver for interacting with the [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection)",
   "main": "dist/cycle-selection-driver.js",
   "module": "dist/cycle-selection-driver.js",
