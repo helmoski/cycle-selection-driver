@@ -51,3 +51,26 @@ run(main, {
   Selection: selectionDriver
 });
 ```
+
+## API
+
+### `selectionDriver()`
+
+A readonly Cycle.js driver that returns a `SelectionSource`
+
+### `SelectionSource`
+
+A Cycle.js source that provides access to user selections.
+
+#### Methods
+
+`.selections()`
+
+Returns a stream of `Selection` objects. The current `Selection` will be emitted each time the [`selectionchange`](https://developer.mozilla.org/en-US/docs/Web/Events/selectionchange) event is fired.
+
+### `Selection`
+
+A [`Selection`](https://developer.mozilla.org/en-US/docs/Web/API/Selection) object representing the range of text selected by the user or the current position of the caret.
+
+It is recommended that you avoid using the mutational methods of the `Selection` object because doing so would constitute as a side effect. Although the `selectionDriver` is currently readonly, it could be updated in the future to accept a sink that would allow mutations to the current selection.
+
