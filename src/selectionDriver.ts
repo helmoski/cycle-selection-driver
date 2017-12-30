@@ -1,8 +1,10 @@
-import { adapt } from '@cycle/run/lib/adapt';
+import { Driver } from '@cycle/run';
 import { isUndefined } from 'lodash';
+import { Stream } from 'xstream';
 
-import ISelectionSource from './ISelectionSource';
-import SelectionSource from './SelectionSource';
+import { ISelection } from './ISelection';
+import { ISelectionSource } from './ISelectionSource';
+import { SelectionSource } from './SelectionSource';
 
 let document: Document;
 
@@ -12,9 +14,7 @@ export function selectionDriver(): ISelectionSource {
     document = window.document;
   }
 
-  const source = new SelectionSource(document);
-
-  return adapt(source);
+  return new SelectionSource(document);
 }
 
 export function setDocument(doc: Document) {

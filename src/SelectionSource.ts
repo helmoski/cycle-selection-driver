@@ -1,9 +1,10 @@
+import { adapt } from '@cycle/run/lib/adapt';
 import { isUndefined } from 'lodash';
 import { Stream } from 'xstream';
 import fromEvent from 'xstream/extra/fromEvent';
 
-import ISelection from './ISelection';
-import ISelectionSource from './ISelectionSource';
+import { ISelection } from './ISelection';
+import { ISelectionSource } from './ISelectionSource';
 
 export class SelectionSource implements ISelectionSource {
   private document: Document;
@@ -13,8 +14,10 @@ export class SelectionSource implements ISelectionSource {
   }
 
   public selections(): Stream<ISelection> {
-    return fromEvent(this.document, 'selectionchange')
+    const selection$ = fromEvent(this.document, 'selectionchange')
       .map(() => this.document.getSelection() as ISelection);
+
+    return adapt(selection$);
   }
 }
 

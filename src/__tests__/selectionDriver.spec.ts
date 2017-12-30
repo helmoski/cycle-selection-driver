@@ -4,7 +4,7 @@ import { expect } from 'chai';
 
 import 'mocha';
 
-import ISelectionSource from '../ISelectionSource';
+import { ISelectionSource } from '../ISelectionSource';
 import { selectionDriver, setDocument } from '../selectionDriver';
 
 describe('selectionDriver', () => {

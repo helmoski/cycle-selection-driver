@@ -1,10 +1,11 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: path.resolve(__dirname, 'index.ts'),
   output: {
-    filename: 'cycle-selection-driver.js',
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
@@ -17,5 +18,11 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
+    new HtmlWebpackPlugin({
+      title: 'Test Site',
+    })
   ],
+  devServer: {
+    contentBase: './dist',
+  },
 };

@@ -3,6 +3,7 @@ dependencies:
   lodash: 4.17.4
   xstream: 11.1.0
 devDependencies:
+  '@cycle/dom': 20.1.0
   '@types/chai': 4.0.10
   '@types/lodash': 4.14.91
   '@types/mocha': 2.2.45
@@ -13,6 +14,7 @@ devDependencies:
   clean-webpack-plugin: 0.1.17
   coveralls: 3.0.0
   html-webpack-plugin: 2.30.1
+  http-server: 0.10.0
   mocha: 4.0.1
   npm-run-all: 4.1.2
   nyc: 11.4.1
@@ -31,10 +33,21 @@ devDependencies:
   webpack: 3.10.0
   webpack-dev-server: 2.9.7
 packages:
+  /@cycle/dom/20.1.0:
+    dependencies:
+      '@cycle/run': 4.1.0
+      es6-map: 0.1.5
+      snabbdom: 0.7.0
+      snabbdom-selector: 2.0.1
+      xstream: 11.1.0
+    dev: true
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-S1LSvVoonrQtvHiav27nK0+lhp4Tbb5UYETaxZx72yxnaS16DXeGJwlbdSC0P4ttAl735pPqAogqz6y2tOpe7A==
   /@cycle/run/4.1.0:
     dependencies:
       xstream: 11.1.0
-    dev: false
     engines:
       node: '>=0.12.0'
     resolution:
@@ -674,6 +687,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=
+  /colors/1.0.3:
+    dev: true
+    engines:
+      node: '>=0.1.90'
+    resolution:
+      integrity: sha1-BDP0TYCWgP3rYO0mDxsMJi6CpAs=
   /combined-stream/1.0.5:
     dependencies:
       delayed-stream: 1.0.0
@@ -758,6 +777,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
+  /corser/2.0.1:
+    dev: true
+    engines:
+      node: '>= 0.4.0'
+    resolution:
+      integrity: sha1-jtolLsqrWEDc2XXOuQ2TcMgZ/4c=
   /coveralls/3.0.0:
     dependencies:
       js-yaml: 3.10.0
@@ -842,6 +867,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-lGfQMsOM+u+58teVASUwYvh/ob0=
+  /cssauron2/2.0.3:
+    dependencies:
+      through: 2.3.8
+    dev: true
+    resolution:
+      integrity: sha512-PzIMi+qzV6DySRn9NYVDmiKi2giSyYQxJn6w/HAusbIm5lxdfEwZUyVwXjNOoJEj2LZFAz1fyp4tqPiJ27jbtw==
   /currently-unhandled/0.4.1:
     dependencies:
       array-find-index: 1.0.2
@@ -1051,6 +1082,15 @@ packages:
     optional: true
     resolution:
       integrity: sha1-D8c6ntXw1Tw4GTOYUj735UN3dQU=
+  /ecstatic/2.2.1:
+    dependencies:
+      he: 1.1.1
+      mime: 1.6.0
+      minimist: 1.2.0
+      url-join: 2.0.2
+    dev: true
+    resolution:
+      integrity: sha512-ztE4WqheoWLh3wv+HQwy7dACnvNY620coWpa+XqY6R2cVWgaAT2lUISU1Uf7JpdLLJCURktJOaA9av2AOzsyYQ==
   /ee-first/1.1.1:
     dev: true
     resolution:
@@ -1790,6 +1830,19 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-Bt/ykpUr9k2+hHH6nfcwZtTzd0I=
+  /http-server/0.10.0:
+    dependencies:
+      colors: 1.0.3
+      corser: 2.0.1
+      ecstatic: 2.2.1
+      http-proxy: 1.16.2
+      opener: 1.4.3
+      optimist: 0.6.1
+      portfinder: 1.0.13
+      union: 0.4.6
+    dev: true
+    resolution:
+      integrity: sha1-sqRGsWqduH7TxiK6m+sbCFsSNKc=
   /http-signature/1.2.0:
     dependencies:
       assert-plus: 1.0.0
@@ -2471,6 +2524,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
+  /minimist/0.0.10:
+    dev: true
+    resolution:
+      integrity: sha1-3j+YVD2/lggr5IrRoMfNqDYwHc8=
   /minimist/0.0.8:
     dev: true
     resolution:
@@ -2719,6 +2776,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=
+  /opener/1.4.3:
+    dev: true
+    resolution:
+      integrity: sha1-XG2ixdflgx6P+jlklQ+NZnSskLg=
   /opn/5.1.0:
     dependencies:
       is-wsl: 1.1.0
@@ -2727,6 +2788,13 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-iPNl7SyM8L30Rm1sjGdLLheyHVw5YXVfi3SKWJzBI7efxRwHojfRFjwE/OLM6qp9xJYMgab8WicTU1cPoY+Hpg==
+  /optimist/0.6.1:
+    dependencies:
+      minimist: 0.0.10
+      wordwrap: 0.0.3
+    dev: true
+    resolution:
+      integrity: sha1-2j6nRob6IaGaERwybpDrFaAZZoY=
   /original/1.0.0:
     dependencies:
       url-parse: 1.0.5
@@ -3051,6 +3119,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-wNWmOycYgArY4esPpSachN1BhF4=
+  /qs/2.3.3:
+    dev: true
+    resolution:
+      integrity: sha1-6eha2+ddoLvkyOBHaghikPhjtAQ=
   /qs/6.5.1:
     dev: true
     engines:
@@ -3479,6 +3551,16 @@ packages:
     dev: true
     resolution:
       integrity: sha512-c7u0ZuvBRX1eXuB4jN3BRCAOGiUTlM8SE3TxbJHrNiHUKL7wonujMOB6Fi1gQc00U91IscFORQHDga/eccqpbw==
+  /snabbdom-selector/2.0.1:
+    dependencies:
+      cssauron2: 2.0.3
+    dev: true
+    resolution:
+      integrity: sha512-GLa3lvATTR9DcsAmH7fHoEu3SK2ureTPGo0SwaJGJ7z54rkIB9gALEuInKxVRvuanMVQLe4IXEAMkuq+/Nr/Mw==
+  /snabbdom/0.7.0:
+    dev: true
+    resolution:
+      integrity: sha512-LCg6lH9p2OD5n52SI4LlpYmDW2bscxsyN7rhnGJB/R3LQy/FdJfqNBM5aVST+zOfM4OdKFl8pxVUhjGsPtQA1w==
   /sntp/2.1.0:
     dependencies:
       hoek: 4.2.0
@@ -3743,7 +3825,6 @@ packages:
     resolution:
       integrity: sha1-vnoN5ITexcXN34s9WRJQRJEvY1s=
   /symbol-observable/1.0.4:
-    dev: false
     engines:
       node: '>=0.10.0'
     resolution:
@@ -4003,6 +4084,14 @@ packages:
       webpack: ^1.9 || ^2 || ^2.1.0-beta || ^2.2.0-rc || ^3.0.0
     resolution:
       integrity: sha1-uVH0q7a9YX5m9j64kUmOORdj4wk=
+  /union/0.4.6:
+    dependencies:
+      qs: 2.3.3
+    dev: true
+    engines:
+      node: '>= 0.8.0'
+    resolution:
+      integrity: sha1-GY+9rrolTniLDvy2MLwR8kopWeA=
   /unpipe/1.0.0:
     dev: true
     engines:
@@ -4013,6 +4102,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-9rRQHC7EzdJrp4vnIilh3ndiFZg=
+  /url-join/2.0.2:
+    dev: true
+    resolution:
+      integrity: sha1-wHJ1aWetJLi1nldBVRyqx49QuLc=
   /url-parse/1.0.5:
     dependencies:
       querystringify: 0.0.4
@@ -4244,6 +4337,12 @@ packages:
       node: '>=0.4.0'
     resolution:
       integrity: sha1-t5Zpu0LstAn4PVg8rVLKF+qhZD8=
+  /wordwrap/0.0.3:
+    dev: true
+    engines:
+      node: '>=0.4.0'
+    resolution:
+      integrity: sha1-o9XabNXAvAAI03I0u68b7WMFkQc=
   /wrap-ansi/2.1.0:
     dependencies:
       string-width: 1.0.2
@@ -4349,6 +4448,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 4
 shrinkwrapVersion: 3
 specifiers:
+  '@cycle/dom': ^20.1.0
   '@cycle/run': ^4.1.0
   '@types/chai': ^4.0.10
   '@types/lodash': ^4.14.91
@@ -4360,6 +4460,7 @@ specifiers:
   clean-webpack-plugin: ^0.1.17
   coveralls: ^3.0.0
   html-webpack-plugin: ^2.30.1
+  http-server: ^0.10.0
   lodash: ^4.17.4
   mocha: ^4.0.1
   npm-run-all: ^4.1.2

@@ -4,9 +4,16 @@
   "description": "A Cycle.js Driver for interacting with the [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection)",
   "main": "index.js",
   "scripts": {
+    "build:dev": "webpack",
+    "build:test-site": "webpack --config ./test-site/webpack.config.js",
+    "build:prod": "webpack -p",
+    "clean": "run-p clean:*",
+    "clean:dist": "rm -Rf dist",
+    "clean:test-site": "rm -Rf ./test-site/dist",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "webpack-dev-server --open",
-    "lint": "tslint --format stylish --project ./tsconfig.json src/**/*.ts",
+    "dev": "webpack-dev-server --config ./test-site/webpack.config.js --open",
+    "lint": "tslint --format stylish --project ./tsconfig.json ./src/**/*.ts ./e2e/**/*.ts ./test-site/**/*.ts",
+    "serve:test-site": "http-server ./test-site/dist",
     "start": "run-s dev",
     "test": "run-s lint test:*",
     "test:unit": "nyc --check-coverage --lines 100 --functions 100 --branches 100 mocha --opts ./mocha.opts"
@@ -27,6 +34,7 @@
     "xstream": "^11.1.0"
   },
   "devDependencies": {
+    "@cycle/dom": "^20.1.0",
     "@types/chai": "^4.0.10",
     "@types/lodash": "^4.14.91",
     "@types/mocha": "^2.2.45",
@@ -37,6 +45,7 @@
     "clean-webpack-plugin": "^0.1.17",
     "coveralls": "^3.0.0",
     "html-webpack-plugin": "^2.30.1",
+    "http-server": "^0.10.0",
     "mocha": "^4.0.1",
     "npm-run-all": "^4.1.2",
     "nyc": "^11.4.1",

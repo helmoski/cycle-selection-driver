@@ -1,13 +1,17 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "umd",
+    "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./dist/",
-    "sourceMap": true,
-    "strict": true
+    "strict": false
   },
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    "./e2e/**/*.ts",
+    "./test-site/**/*.ts"
+  ],
+  "exclude": [
+    "./test-site/dist/**/*"
   ]
 }

@@ -6,7 +6,7 @@ import { stub } from 'sinon';
 
 import 'mocha';
 
-import SelectionSource from '../SelectionSource';
+import { SelectionSource } from '../SelectionSource';
 
 const { expect } = chai;
 const sinonChai = require('sinon-chai'); // tslint:disable-line:no-var-requires
