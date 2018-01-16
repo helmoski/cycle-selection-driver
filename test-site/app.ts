@@ -1,8 +1,8 @@
-import { br, div, h1, label, MainDOMSource, p, textarea, VNode } from '@cycle/dom';
+import { b, br, button, div, label, MainDOMSource, p, textarea, VNode } from '@cycle/dom';
 import { isNull } from 'lodash';
 import xstream, { Stream } from 'xstream';
 
-import { ISelection, ISelectionSource } from '../dist/cycle-selection-driver';
+import { IRange, ISelection, ISelectionSource } from '../dist/cycle-selection-driver';
 
 interface ISources {
   DOM: MainDOMSource;
@@ -11,19 +11,39 @@ interface ISources {
 
 interface ISinks {
   DOM: Stream<VNode>;
+  Selection: Stream<Range[]>;
 }
 
 export default function app(sources: ISources): ISinks {
-  const vdom$: Stream<VNode> = sources.Selection.selections()
+  const selection$ = sources.Selection
+    .selections()
+    .startWith(null as any);
+
+  const select2ndWord$ = sources.DOM
+    .select('#select-second-word')
+    .events('click')
     .startWith(null as any)
+    .map((): IRange => ({
+      startNode: '#editable-paragraph',
+      startOffset: 5,
+      endNode: '#editable-paragraph',
+      endOffset: 7,
+    }));
+
+  const event$ = xstream.combine(selection$, select2ndWord$);
+
+  const vdom$: Stream<VNode> = event$
+    .map(events => events[0])
     .map((selection: ISelection) => {
       return div([
-        h1('Test Page'),
-        p('This page is used for functionally testing cycle-selection-driver.'),
         p(
           '#editable-paragraph',
           { attrs: { contenteditable: true } },
-          'This is an editable region.',
+          [
+            'This ',
+            b('is'),
+            ' an editable region.',
+          ],
         ),
         label({ attrs: { for: 'current-selection' } } , 'Current Selection'),
         br(),
@@ -32,10 +52,13 @@ export default function app(sources: ISources): ISinks {
           { attrs: { readonly: 'readonly' } },
           isNull(selection) ? 'Nothing selected' : selection.toString(),
         ),
+        br(),
+        button('#select-second-word', 'Select Second Word'),
       ]);
     });
 
   return {
     DOM: vdom$,
+    Selection: select2ndWord$,
   };
 }
