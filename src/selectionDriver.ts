@@ -3,12 +3,13 @@ import { Listener, Stream } from 'xstream';
 
 import { IRange } from './IRange';
 import { ISelectionSource } from './ISelectionSource';
-import { modifySelection } from './modifySelection';
+import { modifySelection as originalModifySelection } from './modifySelection';
 import { SelectionSource } from './SelectionSource';
 
 let document: Document;
+let modifySelection = originalModifySelection;
 
-export function selectionDriver(sink$: Stream<IRange[]>): ISelectionSource {
+export function selectionDriver(sink$: Stream<IRange[] | IRange>): ISelectionSource {
   /* istanbul ignore if */
   if (document === undefined) {
     document = window.document;
@@ -26,6 +27,12 @@ export function selectionDriver(sink$: Stream<IRange[]>): ISelectionSource {
 
 export function setDocument(doc: Document) {
   document = doc;
+}
+
+export function setModifySelection(
+  newModifySelection: (document: Document, ranges: IRange[]) => void,
+) {
+  modifySelection = newModifySelection;
 }
 
 export default selectionDriver;

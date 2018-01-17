@@ -1,6 +1,6 @@
 import { getDescendantTextNodes } from './getDescendantTextNodes';
 
-interface IResult {
+export interface IResult {
   node: Text;
   offset: number;
 }
@@ -17,6 +17,9 @@ export function getTargetTextNode(document: Document, node: Node, offset: number
     } else {
       remainingOffset -= textNode.length;
       currentIndex += 1;
+      if (currentIndex >= textNodes.length) {
+        throw new Error('Offset is out of bounds');
+      }
     }
   }
   const result = {

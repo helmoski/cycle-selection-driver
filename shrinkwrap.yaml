@@ -1,6 +1,5 @@
 dependencies:
   '@cycle/run': 4.1.0
-  lodash: 4.17.4
   xstream: 11.1.0
 devDependencies:
   '@cycle/dom': 20.1.0
@@ -16,6 +15,7 @@ devDependencies:
   coveralls: 3.0.0
   html-webpack-plugin: 2.30.1
   http-server: 0.10.0
+  lodash: 4.17.4
   mocha: 4.0.1
   nightwatch: 0.9.19
   npm-run-all: 4.1.2
@@ -2658,6 +2658,7 @@ packages:
     resolution:
       integrity: sha1-lU73UEkmIDjJbR/Jiyj9r58Hcqo=
   /lodash/4.17.4:
+    dev: true
     resolution:
       integrity: sha1-eCA6TRwyiuHYbcpkYONptX9AVa4=
   /log-driver/1.2.5:
