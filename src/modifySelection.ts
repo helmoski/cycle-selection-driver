@@ -23,7 +23,7 @@ export function modifySelection(document: Document, ranges: IRange[]): void {
       if (endNode === null) {
         throw new Error(`${range.endNode} does not exist`);
       }
-      
+
       const startTextNode = getTargetTextNode(document, startNode, range.startOffset);
       documentRange.setStart(startTextNode.node, startTextNode.offset);
       const endTextNode = getTargetTextNode(document, endNode, range.endOffset);
