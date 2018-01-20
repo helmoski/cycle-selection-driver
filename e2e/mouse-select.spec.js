@@ -4,7 +4,7 @@ const currentSelectionId = '#current-selection';
 module.exports = {
   'Test mouse selection' : function (client) {
     client
-      .url('http://localhost:8080')
+      .url('http://127.0.0.1:8080')
       .pause(1000);
 
     client
