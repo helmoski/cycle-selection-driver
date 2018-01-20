@@ -95,7 +95,7 @@ It is recommended that you avoid using the mutational methods of the `Selection`
 
 ### `IRange`
 
-An object representing a [`Range`](https://developer.mozilla.org/en-US/docs/Web/API/Range); albeit, with a slight difference. The offset in `IRange` represents number of characters; whereas, the offset in a `Range` can represent characters or nodes depending on the type of node.
+An object representing a [`Range`](https://developer.mozilla.org/en-US/docs/Web/API/Range); albeit, with a slight difference: The offset in `IRange` represents characters; whereas, the offset in a `Range` can represent characters or nodes depending on the type of node.
 
 ### Properties
 
