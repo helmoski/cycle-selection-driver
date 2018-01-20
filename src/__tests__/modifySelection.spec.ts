@@ -1,4 +1,4 @@
-// tslint:disable:no-unused-expression
+// tslint:disable:no-unused-expression object-literal-sort-keys
 
 import { expect } from 'chai';
 import { SinonStub, spy, stub } from 'sinon';
@@ -42,8 +42,8 @@ describe('modifySelection', () => {
       removeAllRanges: stub() as () => void,
     } as Selection;
     documentRange = {
-      setEnd: stub() as (node: Node, offset: number) => void,
       setStart: stub() as (node: Node, offset: number) => void,
+      setEnd: stub() as (node: Node, offset: number) => void,
     } as Range;
     (doc.getSelection as SinonStub).returns(selection);
     (doc.createRange as SinonStub).returns(documentRange);
