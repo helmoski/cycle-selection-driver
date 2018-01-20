@@ -18,45 +18,64 @@ npm install cycle-selection-driver --save
 ```js
 import { br, div, label, makeDOMDriver, p, textarea } from '@cycle/dom';
 import { run } from '@cycle/run';
+import { timeDriver } from '@cycle/time';
 import { selectionDriver } from 'cycle-selection-driver';
 
 function main (sources) {
   const vdom$ = sources.Selection.selections()
     .startWith(null)
     .map(selection => div([
-      p('This is a regular paragraph with text you can select.'),
       p(
-        { attrs: { contentEditable: true } },
-        'This is an editable region with text you can select.'
+        '#editable-paragraph',
+        { attrs: { contenteditable: true } },
+        [
+          'This ',
+          b('is'),
+          ' an editable region.',
+        ],
       ),
-      label(
-        { attrs: { for: 'current-selection' } },
-        'Current Selection'
-      ),
+      label({ attrs: { for: 'current-selection' } } , 'Current Selection'),
       br(),
       textarea(
         '#current-selection',
         { attrs: { readonly: 'readonly' } },
-        selection === null ? 'Nothing selected' : selection.toString(),
-      )
+        isNull(selection) ? 'Nothing selected' : selection.toString(),
+      ),
     ]));
+
+  // selects the 2nd word every 5 seconds
+  const select2ndWord$ = sources.Time.periodic(5000)
+    .map(() => ({
+      startNode: '#editable-paragraph',
+      startOffset: 5,
+      endNode: '#editable-paragraph',
+      endOffset: 7,
+    }));
 
   return {
     DOM: vdom$,
+    selection: select2ndWord$,
   };
 }
 
 run(main, {
   DOM: makeDOMDriver('.app'),
-  Selection: selectionDriver
+  Selection: selectionDriver,
+  Time: timeDriver,
 });
 ```
 
 ## API
 
-### `selectionDriver()`
+### `selectionDriver(sink$)`
 
-A readonly Cycle.js driver that returns a `SelectionSource`
+A Cycle.js driver that returns a `SelectionSource`.
+
+### Arguments
+
+`sink$`
+
+A stream of `IRange` objects or `IRange` arrays. When the sink stream emits an event, the specified range(s) will be selected.
 
 ### `SelectionSource`
 
@@ -72,7 +91,21 @@ Returns a stream of `Selection` objects. The current `Selection` will be emitted
 
 A [`Selection`](https://developer.mozilla.org/en-US/docs/Web/API/Selection) object representing the range of text selected by the user or the current position of the caret.
 
-It is recommended that you avoid using the mutational methods of the `Selection` object because doing so would constitute as a side effect. Although the `selectionDriver` is currently readonly, it could be updated in the future to accept a sink that would allow mutations to the current selection.
+It is recommended that you avoid using the mutational methods of the `Selection` object because doing so would constitute as a side effect. To update the selection, use the driver `sink$`.
+
+### `IRange`
+
+An object representing a [`Range`](https://developer.mozilla.org/en-US/docs/Web/API/Range); albeit, with a slight difference: The offset in `IRange` represents characters; whereas, the offset in a `Range` can represent characters or nodes depending on the type of node.
+
+### Properties
+
+`startNode` - The node that the start of the range is in
+
+`startOffset` - The character offset of the start of the range within the start node
+
+`endNode` - The node that the end of the range is in
+
+`endOffset` The character offset of the end of the range within the end node.
 
 ---
 

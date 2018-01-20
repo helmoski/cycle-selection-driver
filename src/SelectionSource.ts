@@ -2,7 +2,6 @@ import { adapt } from '@cycle/run/lib/adapt';
 import { Stream } from 'xstream';
 import fromEvent from 'xstream/extra/fromEvent';
 
-import { ISelection } from './ISelection';
 import { ISelectionSource } from './ISelectionSource';
 
 export class SelectionSource implements ISelectionSource {
@@ -12,9 +11,9 @@ export class SelectionSource implements ISelectionSource {
     this.document = document === undefined ? /* istanbul ignore next */ window.document : document;
   }
 
-  public selections(): Stream<ISelection> {
+  public selections(): Stream<Selection> {
     const selection$ = fromEvent(this.document, 'selectionchange')
-      .map(() => this.document.getSelection() as ISelection);
+      .map(() => this.document.getSelection() as Selection);
 
     return adapt(selection$);
   }

@@ -1,8 +1,9 @@
 const editableParagraphId = '#editable-paragraph';
 const currentSelectionId = '#current-selection';
+const selectSecondWordId = '#select-second-word';
 
 module.exports = {
-  'Test mouse selection' : function (client) {
+  'Test writeable driver' : function (client) {
     client
       .url('http://127.0.0.1:8080')
       .pause(1000);
@@ -10,20 +11,19 @@ module.exports = {
     client
       .moveToElement(editableParagraphId, 0, 5)
       .mouseButtonDown()
-      .moveToElement(editableParagraphId, 30, 5);
+      .moveToElement(editableParagraphId, 30, 5)
+      .mouseButtonUp();
 
     client
       .expect.element(currentSelectionId)
       .value.to.equal('This');
 
-    client
-      .moveToElement(editableParagraphId, 115, 5)
-      .mouseButtonUp();
+    client.click(selectSecondWordId);
 
     client
       .expect.element(currentSelectionId)
-      .value.to.equal('This is an editable');
-    
+      .value.to.equal('is');
+
     client.end();
   }
 };

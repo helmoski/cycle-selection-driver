@@ -1,9 +1,7 @@
 import { Stream } from 'xstream';
 
-import { ISelection } from './ISelection';
-
 export interface ISelectionSource {
-  selections(): Stream<ISelection>;
+  selections(): Stream<Selection>;
 }
 
 export default ISelectionSource;
