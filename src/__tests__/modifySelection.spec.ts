@@ -1,4 +1,4 @@
-// tslint:disable:no-unused-expression object-literal-sort-keys
+/* tslint:disable:no-unused-expression object-literal-sort-keys */
 
 import { expect } from 'chai';
 import { SinonStub, spy, stub } from 'sinon';
