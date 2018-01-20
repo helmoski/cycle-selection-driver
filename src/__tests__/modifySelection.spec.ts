@@ -33,17 +33,17 @@ describe('modifySelection', () => {
 
   beforeEach(() => {
     doc = {
-      getSelection: stub() as () => Selection,
       createRange: stub() as () => Range,
+      getSelection: stub() as () => Selection,
       querySelector: stub() as (selectors: string) => Element,
     } as Document;
     selection = {
-      removeAllRanges: stub() as () => void,
       addRange: stub() as (range: Range) => void,
+      removeAllRanges: stub() as () => void,
     } as Selection;
     documentRange = {
-      setStart: stub() as (node: Node, offset: number) => void,
       setEnd: stub() as (node: Node, offset: number) => void,
+      setStart: stub() as (node: Node, offset: number) => void,
     } as Range;
     (doc.getSelection as SinonStub).returns(selection);
     (doc.createRange as SinonStub).returns(documentRange);
