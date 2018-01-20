@@ -1,4 +1,6 @@
-import { getDescendantTextNodes } from './getDescendantTextNodes';
+import { getDescendantTextNodes as originalGetDescendantTextNodes } from './getDescendantTextNodes';
+
+let getDescendantTextNodes = originalGetDescendantTextNodes;
 
 export interface IResult {
   node: Text;
@@ -28,6 +30,10 @@ export function getTargetTextNode(document: Document, node: Node, offset: number
   } as IResult;
 
   return result;
+}
+
+export function mockGetDescendantTextNodes(mock) {
+  getDescendantTextNodes = mock;
 }
 
 export default getTargetTextNode;
