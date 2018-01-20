@@ -3,7 +3,7 @@ const currentSelectionId = '#current-selection';
 const selectSecondWordId = '#select-second-word';
 
 module.exports = {
-  'Test writeable driver' : function (client) {
+  'Test writable driver' : function (client) {
     client
       .url('http://127.0.0.1:8080')
       .pause(1000);
