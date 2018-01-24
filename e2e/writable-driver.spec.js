@@ -1,6 +1,7 @@
 const editableParagraphId = '#editable-paragraph';
 const currentSelectionId = '#current-selection';
 const selectSecondWordId = '#select-second-word';
+const moveCaretToEndId = '#move-caret-to-end';
 
 module.exports = {
   'Test writable driver' : function (client) {
@@ -23,6 +24,22 @@ module.exports = {
     client
       .expect.element(currentSelectionId)
       .value.to.equal('is');
+
+    client.click(moveCaretToEndId);
+
+    client
+      .expect.element(currentSelectionId)
+      .value.to.equal('');
+
+    client
+      .keys([
+        client.Keys.SHIFT,
+        client.Keys.ARROW_LEFT,
+      ]);
+
+      client
+      .expect.element(currentSelectionId)
+      .value.to.equal('.');
 
     client.end();
   }

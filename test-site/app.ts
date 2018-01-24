@@ -16,13 +16,11 @@ interface ISinks {
 
 export default function app(sources: ISources): ISinks {
   const selection$ = sources.Selection
-    .selections()
-    .startWith(null as any);
+    .selections();
 
   const select2ndWord$ = sources.DOM
     .select('#select-second-word')
     .events('click')
-    .startWith(null as any)
     .map((): IRange => ({
       startNode: '#editable-paragraph',
       startOffset: 5,
@@ -30,11 +28,24 @@ export default function app(sources: ISources): ISinks {
       endOffset: 7,
     }));
 
-  const event$ = xstream.combine(selection$, select2ndWord$);
+  const moveCaretToEnd$ = sources.DOM
+    .select('#move-caret-to-end')
+    .events('click')
+    .map((): IRange => ({
+      startNode: '#editable-paragraph',
+      startOffset: 27,
+      endNode: '#editable-paragraph',
+      endOffset: 27,
+    }));
+
+  const newSelection$ = xstream.merge(select2ndWord$, moveCaretToEnd$);
+
+  const event$ = xstream.merge(selection$, newSelection$);
 
   const vdom$: Stream<VNode> = event$
-    .map(events => events[0])
-    .map((selection: ISelection) => {
+    .startWith(null as any)
+    .filter(event => event instanceof Selection || event === null)
+    .map((selection: Selection) => {
       return div([
         p(
           '#editable-paragraph',
@@ -54,11 +65,12 @@ export default function app(sources: ISources): ISinks {
         ),
         br(),
         button('#select-second-word', 'Select Second Word'),
+        button('#move-caret-to-end', 'Move Caret to End'),
       ]);
     });
 
   return {
     DOM: vdom$,
-    Selection: select2ndWord$,
+    Selection: newSelection$,
   };
 }
