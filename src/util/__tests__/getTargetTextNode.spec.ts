@@ -35,4 +35,9 @@ describe('getTargetTextNode', () => {
     expect(() => getTargetTextNode(document, node, 15))
       .to.throw('Offset is out of bounds');
   });
+
+  it('does not throw an error if the offset corresponds to the end of the node', () => {
+    expect(() => getTargetTextNode(document, node, 9))
+      .not.to.throw();
+  });
 });
