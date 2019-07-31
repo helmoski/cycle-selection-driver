@@ -1,20 +1,24 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: './src/index.ts',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist/umd'),
     filename: 'cycle-selection-driver.js',
     library: 'cycleSelectionDriver',
     libraryTarget: 'umd',
   },
+  devtool: "source-map",
   resolve: {
     extensions: ['.js', '.ts'],
   },
   module: {
     loaders: [
-      { test: /\.ts?$/, loader: 'ts-loader' }
+      {
+        test: /\.ts?$/, loader: 'ts-loader', options: {
+          compilerOptions: { declaration: false }
+        }
+      }
     ]
   },
   externals: {
@@ -36,8 +40,5 @@ module.exports = {
       amd: 'xstream/extra/fromEvent',
       root: 'fromEvent',
     }
-  },
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-  ],
+  }
 };

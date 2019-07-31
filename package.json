@@ -1,16 +1,20 @@
 {
   "name": "cycle-selection-driver",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "A Cycle.js Driver for interacting with the [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection)",
-  "main": "dist/cycle-selection-driver.js",
-  "module": "dist/cycle-selection-driver.js",
+  "main": "dist/umd/index.js",
+  "module": "dist/es6/index.js",
+  "typings": "dist/umd/index.d.ts",
+  "types": "dist/umd/index.d.ts",
   "files": [
-    "dist/cycle-selection-driver.js"
+    "dist"
   ],
   "scripts": {
     "build:dev": "webpack",
     "build:test-site": "webpack --config ./test-site/webpack.config.js",
-    "build:prod": "webpack -p",
+    "build:prod": "rm -r dist && run-s build-umd && run-s build-es6",
+    "build-umd": "tsc --module umd --outDir ./dist/umd",
+    "build-es6": "tsc --module es6 --outDir ./dist/es6",
     "clean": "run-p clean:*",
     "clean:dist": "rm -Rf dist",
     "clean:test-site": "rm -Rf ./test-site/dist",
@@ -34,11 +38,13 @@
     "url": "https://github.com/helmoski/cycle-selection-driver/issues"
   },
   "homepage": "https://github.com/helmoski/cycle-selection-driver#readme",
-  "dependencies": {
-    "@cycle/run": "^4.1.0",
+  "peerDependencies": {
+    "@cycle/run": "^5.2.0",
     "xstream": "^11.1.0"
   },
   "devDependencies": {
+    "@cycle/run": "^5.2.0",
+    "xstream": "^11.1.0",
     "@cycle/dom": "^20.1.0",
     "@types/chai": "^4.0.10",
     "@types/lodash": "^4.14.91",
@@ -83,7 +89,8 @@
     ],
     "exclude": [
       "src/**/*.spec.ts",
-      "src/**/I[A-Z]*.ts"
+      "src/**/I[A-Z]*.ts",
+      "**/*.d.ts"
     ],
     "require": [
       "ts-node/register"

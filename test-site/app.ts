@@ -2,7 +2,7 @@ import { b, br, button, div, label, MainDOMSource, p, textarea, VNode } from '@c
 import { isNull } from 'lodash';
 import xstream, { Stream } from 'xstream';
 
-import { IRange, ISelection, ISelectionSource } from '../dist/cycle-selection-driver';
+import { IRange, ISelectionSource } from '../dist/es6/index.js';
 
 interface ISources {
   DOM: MainDOMSource;
@@ -11,7 +11,7 @@ interface ISources {
 
 interface ISinks {
   DOM: Stream<VNode>;
-  Selection: Stream<Range[]>;
+  Selection: Stream<IRange[] | IRange>;
 }
 
 export default function app(sources: ISources): ISinks {
@@ -56,7 +56,7 @@ export default function app(sources: ISources): ISinks {
             ' an editable region.',
           ],
         ),
-        label({ attrs: { for: 'current-selection' } } , 'Current Selection'),
+        label({ attrs: { for: 'current-selection' } }, 'Current Selection'),
         br(),
         textarea(
           '#current-selection',
