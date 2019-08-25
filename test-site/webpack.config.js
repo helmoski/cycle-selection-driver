@@ -21,8 +21,5 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Test Site',
     })
-  ],
-  devServer: {
-    contentBase: './dist',
-  },
+  ]
 };
