@@ -4,9 +4,6 @@ addons:
 language: node_js
 node_js:
 - node
-install:
-- npm install -g pnpm
-- pnpm install
 after_success:
 - npm run coveralls
 notifications:
