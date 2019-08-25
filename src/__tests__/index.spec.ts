@@ -7,8 +7,6 @@ import * as index from '../index';
 describe('src/index', () => {
   it('exports the expected items', () => {
     expect(Object.keys(index)).to.deep.equal([
-      'IRange',
-      'ISelectionSource',
       'selectionDriver',
       'SelectionSource',
     ]);
