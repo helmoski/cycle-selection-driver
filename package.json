@@ -5,9 +5,6 @@
   "main": "dist/cycle-selection-driver.js",
   "module": "dist/cycle-selection-driver.js",
   "types": "dist/types/index.d.ts",
-  "files": [
-    "dist/cycle-selection-driver.js"
-  ],
   "scripts": {
     "build:dev": "webpack",
     "build:test-site": "webpack --config ./test-site/webpack.config.js",
