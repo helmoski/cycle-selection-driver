@@ -1,5 +1,6 @@
 import { adapt } from '@cycle/run/lib/adapt';
 import { Stream } from 'xstream';
+import dropRepeats from 'xstream/extra/dropRepeats';
 import fromEvent from 'xstream/extra/fromEvent';
 
 import { ISelectionSource } from './ISelectionSource';
@@ -15,7 +16,12 @@ export class SelectionSource implements ISelectionSource {
   public selections(selector: string): Stream<Selection> {
     const selection$ = fromEvent(this.document, 'selectionchange')
       .map(() => this.document.getSelection() as Selection)
-      .filter((selection) => selectionMatchesSelector(selection, selector));
+      .map((selection) => (
+        selectionMatchesSelector(selection, selector)
+          ? selection
+          : null
+      ))
+      .compose(dropRepeats((x, y) => x === null && y === null));
 
     return adapt(selection$);
   }

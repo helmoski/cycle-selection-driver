@@ -1,8 +1,8 @@
-import { b, br, button, div, label, MainDOMSource, p, pre, textarea, VNode } from '@cycle/dom';
+import { b, br, button, div, MainDOMSource, p, pre, VNode } from '@cycle/dom';
 import { isNull } from 'lodash';
 import xstream, { Stream } from 'xstream';
 
-import { IRange, ISelection, ISelectionSource } from '../dist/cycle-selection-driver';
+import { IRange, ISelectionSource } from '../dist/cycle-selection-driver';
 
 interface ISources {
   DOM: MainDOMSource;
@@ -56,17 +56,15 @@ export default function app(sources: ISources): ISinks {
             ' an editable region.',
           ],
         ),
-        label({ attrs: { for: 'current-selection' } } , 'Current Selection'),
-        br(),
-        textarea(
-          '#current-selection',
-          { attrs: { readonly: 'readonly' } },
-          isNull(selection) ? 'Nothing selected' : selection.toString(),
-        ),
         br(),
         pre(
-          '#current-selection-details',
+          '#current-selection',
           [
+            'Current Selection:',
+            br(),
+            isNull(selection) ? 'N/A' : selection.toString(),
+            br(),
+            br(),
             'Anchor Element:',
             br(),
             isNull(selection) ? 'N/A' : selection.anchorNode.parentElement.outerHTML,

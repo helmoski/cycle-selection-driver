@@ -57,7 +57,10 @@ describe('SelectionSource', () => {
           getSelection: stub(),
         };
         const matchingElement = { matches: () => true };
-        const nonMatchingElement = { matches: () => false };
+        const nonMatchingElement = {
+          matches: () => false,
+          parentElement: null,
+        };
         const matchingNode = { parentElement: matchingElement };
         const nonMatchingNode = { parentElement: nonMatchingElement };
         const selection1 = {
@@ -72,15 +75,20 @@ describe('SelectionSource', () => {
           anchorNode: nonMatchingNode,
           focusNode: nonMatchingNode,
         };
-        document.getSelection.onFirstCall().returns(selection1);
-        document.getSelection.onSecondCall().returns(selection2);
-        document.getSelection.onThirdCall().returns(selection3);
+        const selection4 = {
+          anchorNode: nonMatchingNode,
+          focusNode: nonMatchingNode,
+        };
+        document.getSelection.onCall(0).returns(selection1);
+        document.getSelection.onCall(1).returns(selection2);
+        document.getSelection.onCall(2).returns(selection3);
+        document.getSelection.onCall(3).returns(selection4);
         const selectionSource = new SelectionSource(document as any);
         const listener = {
           complete: noop,
-          error: noop,
-          next: stub(),
-        };
+          error: (e) => console.error(e),
+          next: stub().callsFake(x => { console.log(x) })
+        } as any;
         selectionSource
           .selections(selector)
           .addListener(listener);
@@ -88,9 +96,11 @@ describe('SelectionSource', () => {
         emitEvent();
         emitEvent();
         emitEvent();
-        expect(listener.next).to.have.been.calledTwice;
+        emitEvent();
+        expect(listener.next).to.have.been.calledThrice;
         expect(listener.next.firstCall.calledWithExactly(selection1)).to.be.true;
         expect(listener.next.secondCall.calledWithExactly(selection2)).to.be.true;
+        expect(listener.next.thirdCall.calledWithExactly(null)).to.be.true;
       });
     });
   });
