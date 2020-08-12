@@ -18,8 +18,7 @@
     "serve:test-site": "http-server ./test-site/dist",
     "start": "run-s build:dev build:test-site serve:test-site",
     "test": "run-s lint test:*",
-    "test:unit": "nyc --check-coverage --lines 100 --functions 100 --branches 100 mocha --opts ./mocha.opts",
-    "nightwatch": "nightwatch"
+    "test:unit": "nyc --check-coverage --lines 100 --functions 100 --branches 100 mocha --opts ./mocha.opts"
   },
   "repository": {
     "type": "git",
@@ -44,7 +43,6 @@
     "@types/sinon": "^4.1.2",
     "@types/sinon-chai": "^2.7.29",
     "chai": "^4.1.2",
-    "chromedriver": "^76.0.0",
     "clean-webpack-plugin": "^0.1.17",
     "coveralls": "^3.0.0",
     "html-webpack-plugin": "^2.30.1",
