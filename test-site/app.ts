@@ -1,4 +1,4 @@
-import { b, br, button, div, label, MainDOMSource, p, textarea, VNode } from '@cycle/dom';
+import { b, br, button, div, label, MainDOMSource, p, pre, textarea, VNode } from '@cycle/dom';
 import { isNull } from 'lodash';
 import xstream, { Stream } from 'xstream';
 
@@ -16,7 +16,7 @@ interface ISinks {
 
 export default function app(sources: ISources): ISinks {
   const selection$ = sources.Selection
-    .selections();
+    .selections('#editable-paragraph');
 
   const select2ndWord$ = sources.DOM
     .select('#select-second-word')
@@ -62,6 +62,32 @@ export default function app(sources: ISources): ISinks {
           '#current-selection',
           { attrs: { readonly: 'readonly' } },
           isNull(selection) ? 'Nothing selected' : selection.toString(),
+        ),
+        br(),
+        pre(
+          '#current-selection-details',
+          [
+            'Anchor Element:',
+            br(),
+            isNull(selection) ? 'N/A' : selection.anchorNode.parentElement.outerHTML,
+            br(),
+            br(),
+            'Anchor Offset:',
+            br(),
+            isNull(selection) ? 'N/A' : selection.anchorOffset,
+            br(),
+            br(),
+            'Focus Element:',
+            br(),
+            isNull(selection) ? 'N/A' : selection.focusNode.parentElement.outerHTML,
+            br(),
+            br(),
+            'Focus Offset:',
+            br(),
+            isNull(selection) ? 'N/A' : selection.focusOffset,
+            br(),
+            br(),
+          ]
         ),
         br(),
         button('#select-second-word', 'Select Second Word'),

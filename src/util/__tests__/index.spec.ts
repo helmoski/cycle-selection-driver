@@ -7,8 +7,10 @@ import * as index from '../index';
 describe('src/util/index', () => {
   it('exports the expected items', () => {
     expect(Object.keys(index)).to.deep.equal([
+      'elementMatchesSelector',
       'getDescendantTextNodes',
       'getTargetTextNode',
+      'selectionMatchesSelector',
     ]);
   });
 });

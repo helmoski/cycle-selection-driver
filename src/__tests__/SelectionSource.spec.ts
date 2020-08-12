@@ -13,6 +13,8 @@ const sinonChai = require('sinon-chai'); // tslint:disable-line:no-var-requires
 chai.use(sinonChai);
 
 describe('SelectionSource', () => {
+  const selector = '.target';
+
   describe('selections method', () => {
     it('should add a listener for the document selectionchange event', () => {
       const document = {
@@ -20,7 +22,7 @@ describe('SelectionSource', () => {
       };
       const selectionSource = new SelectionSource(document as any);
       selectionSource
-        .selections()
+        .selections(selector)
         .addListener({
           complete: noop,
           error: noop,
@@ -41,7 +43,7 @@ describe('SelectionSource', () => {
         next: noop,
       };
       selectionSource
-        .selections()
+        .selections(selector)
         .addListener(listener);
       const emitEvent = document.addEventListener.firstCall.args[1];
       emitEvent();
@@ -49,15 +51,30 @@ describe('SelectionSource', () => {
     });
 
     describe('returned stream', () => {
-      it('should emit the updated selection when the selectionchange event is emitted', () => {
+      it('should emit the updated selection when the selectionchange event is emitted for the specified selector', () => {
         const document = {
           addEventListener: stub(),
           getSelection: stub(),
         };
-        const selection1 = 'selection 1';
-        const selection2 = 'selection 2';
+        const matchingElement = { matches: () => true };
+        const nonMatchingElement = { matches: () => false };
+        const matchingNode = { parentElement: matchingElement };
+        const nonMatchingNode = { parentElement: nonMatchingElement };
+        const selection1 = {
+          anchorNode: matchingNode,
+          focusNode: matchingNode,
+        };
+        const selection2 = {
+          anchorNode: matchingNode,
+          focusNode: matchingNode,
+        };
+        const selection3 = {
+          anchorNode: nonMatchingNode,
+          focusNode: nonMatchingNode,
+        };
         document.getSelection.onFirstCall().returns(selection1);
         document.getSelection.onSecondCall().returns(selection2);
+        document.getSelection.onThirdCall().returns(selection3);
         const selectionSource = new SelectionSource(document as any);
         const listener = {
           complete: noop,
@@ -65,9 +82,10 @@ describe('SelectionSource', () => {
           next: stub(),
         };
         selectionSource
-          .selections()
+          .selections(selector)
           .addListener(listener);
         const emitEvent = document.addEventListener.firstCall.args[1];
+        emitEvent();
         emitEvent();
         emitEvent();
         expect(listener.next).to.have.been.calledTwice;
