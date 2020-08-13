@@ -9,7 +9,9 @@ describe('src/util/index', () => {
     expect(Object.keys(index)).to.deep.equal([
       'elementMatchesSelector',
       'getDescendantTextNodes',
+      'getSelectionRoot',
       'getTargetTextNode',
+      'searchHierarchyForMatchingElement',
       'selectionMatchesSelector',
     ]);
   });

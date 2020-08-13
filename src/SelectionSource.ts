@@ -4,7 +4,7 @@ import dropRepeats from 'xstream/extra/dropRepeats';
 import fromEvent from 'xstream/extra/fromEvent';
 
 import { ISelectionSource } from './ISelectionSource';
-import { selectionMatchesSelector } from './util';
+import { selectionMatchesSelector, getSelectionRoot } from './util';
 
 export class SelectionSource implements ISelectionSource {
   private document: Document;
@@ -17,9 +17,9 @@ export class SelectionSource implements ISelectionSource {
     const selection$ = fromEvent(this.document, 'selectionchange')
       .map(() => this.document.getSelection() as Selection)
       .map((selection) => (
-        selectionMatchesSelector(selection, selector)
-          ? selection
-          : null
+        getSelectionRoot(selection, selector) === null
+          ? null
+          : selection
       ))
       .compose(dropRepeats((x, y) => x === null && y === null));
 

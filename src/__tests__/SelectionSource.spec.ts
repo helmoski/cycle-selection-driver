@@ -86,8 +86,8 @@ describe('SelectionSource', () => {
         const selectionSource = new SelectionSource(document as any);
         const listener = {
           complete: noop,
-          error: (e) => console.error(e),
-          next: stub().callsFake(x => { console.log(x) })
+          error: noop,
+          next: stub(),
         } as any;
         selectionSource
           .selections(selector)
