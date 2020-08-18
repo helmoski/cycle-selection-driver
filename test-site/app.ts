@@ -1,4 +1,4 @@
-import { b, br, button, div, MainDOMSource, p, pre, VNode } from '@cycle/dom';
+import { b, br, button, div, li, MainDOMSource, p, pre, ul, VNode } from '@cycle/dom';
 import { isNull } from 'lodash';
 import xstream, { Stream } from 'xstream';
 
@@ -47,13 +47,31 @@ export default function app(sources: ISources): ISinks {
     .filter(event => event instanceof Selection || event === null)
     .map((selection: Selection) => {
       return div([
-        p(
+        div(
           '#editable-paragraph',
           { attrs: { contenteditable: true } },
           [
-            'This ',
-            b('is'),
-            ' an editable region.',
+            p([
+              'Lorem ',
+              b('ipsum'),
+              ' dolor',
+            ]),
+            p([
+              br(),
+            ]),
+            p('Wombat'),
+            ul([
+              li('Lorem'),
+              li([
+                br(),
+              ]),
+              li('Ipsum'),
+              ul([
+                li('foo'),
+                li('bar'),
+              ]),
+              li('Dolor'),
+            ])
           ],
         ),
         br(),
