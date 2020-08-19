@@ -2,7 +2,11 @@ import { b, br, button, div, li, MainDOMSource, p, pre, ul, VNode } from '@cycle
 import { isNull } from 'lodash';
 import xstream, { Stream } from 'xstream';
 
-import { IRange, ISelectionSource } from '../dist/cycle-selection-driver';
+import {
+  ISelectionRange,
+  ISelectionSource,
+  ITargetSelectionRange,
+} from '../dist/cycle-selection-driver';
 
 interface ISources {
   DOM: MainDOMSource;
@@ -11,7 +15,7 @@ interface ISources {
 
 interface ISinks {
   DOM: Stream<VNode>;
-  Selection: Stream<Range[]>;
+  Selection: Stream<ITargetSelectionRange[]>;
 }
 
 export default function app(sources: ISources): ISinks {
@@ -21,31 +25,28 @@ export default function app(sources: ISources): ISinks {
   const select2ndWord$ = sources.DOM
     .select('#select-second-word')
     .events('click')
-    .map((): IRange => ({
-      startNode: '#editable-paragraph',
-      startOffset: 5,
-      endNode: '#editable-paragraph',
-      endOffset: 7,
+    .map((): ITargetSelectionRange => ({
+      startNode: '#second-word',
+      startOffset: 0,
+      endNode: '#second-word',
+      endOffset: 5,
     }));
 
-  const moveCaretToEnd$ = sources.DOM
-    .select('#move-caret-to-end')
+  const selectEmptyLine$ = sources.DOM
+    .select('#select-empty-line')
     .events('click')
-    .map((): IRange => ({
-      startNode: '#editable-paragraph',
-      startOffset: 27,
-      endNode: '#editable-paragraph',
-      endOffset: 27,
+    .map((): ITargetSelectionRange => ({
+      startNode: '#empty-line',
+      startOffset: 0,
+      endNode: '#empty-line',
+      endOffset: 0,
     }));
 
-  const newSelection$ = xstream.merge(select2ndWord$, moveCaretToEnd$);
+  const newSelection$ = xstream.merge(select2ndWord$, selectEmptyLine$);
 
-  const event$ = xstream.merge(selection$, newSelection$);
-
-  const vdom$: Stream<VNode> = event$
+  const vdom$: Stream<VNode> = selection$
     .startWith(null as any)
-    .filter(event => event instanceof Selection || event === null)
-    .map((selection: Selection) => {
+    .map((selectionRange: ISelectionRange) => {
       return div([
         div(
           '#editable-paragraph',
@@ -53,12 +54,16 @@ export default function app(sources: ISources): ISinks {
           [
             p([
               'Lorem ',
-              b('ipsum'),
+              b(
+                '#second-word',
+                ['ipsum']
+              ),
               ' dolor',
             ]),
-            p([
-              br(),
-            ]),
+            p(
+              '#empty-line',
+              [br()],
+            ),
             p('Wombat'),
             ul([
               li('Lorem'),
@@ -75,39 +80,34 @@ export default function app(sources: ISources): ISinks {
           ],
         ),
         br(),
-        pre(
-          '#current-selection',
-          [
-            'Current Selection:',
-            br(),
-            isNull(selection) ? 'N/A' : selection.toString(),
-            br(),
-            br(),
-            'Anchor Element:',
-            br(),
-            isNull(selection) ? 'N/A' : selection.anchorNode.parentElement.outerHTML,
-            br(),
-            br(),
-            'Anchor Offset:',
-            br(),
-            isNull(selection) ? 'N/A' : selection.anchorOffset,
-            br(),
-            br(),
-            'Focus Element:',
-            br(),
-            isNull(selection) ? 'N/A' : selection.focusNode.parentElement.outerHTML,
-            br(),
-            br(),
-            'Focus Offset:',
-            br(),
-            isNull(selection) ? 'N/A' : selection.focusOffset,
-            br(),
-            br(),
-          ]
-        ),
+        pre([
+          'Current Selection:',
+          br(),
+          isNull(selectionRange) ? 'N/A' : selectionRange.text,
+        ]),
+        pre([
+          'Start Element:',
+          br(),
+          isNull(selectionRange) ? 'N/A' : selectionRange.startElement.outerHTML,
+        ]),
+        pre([
+          'Start Offset:',
+          br(),
+          isNull(selectionRange) ? 'N/A' : selectionRange.startOffset,
+        ]),
+        pre([
+          'End Element:',
+          br(),
+          isNull(selectionRange) ? 'N/A' : selectionRange.endElement.outerHTML,
+        ]),
+        pre([
+          'End Offset:',
+          br(),
+          isNull(selectionRange) ? 'N/A' : selectionRange.endOffset,
+        ]),
         br(),
         button('#select-second-word', 'Select Second Word'),
-        button('#move-caret-to-end', 'Move Caret to End'),
+        button('#select-empty-line', 'Select Empty Line'),
       ]);
     });
 
