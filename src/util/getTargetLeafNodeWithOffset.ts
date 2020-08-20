@@ -1,9 +1,6 @@
 import { INodeWithOffset } from '../types';
-import { getDescendantTextNodes as originalGetDescendantTextNodes } from './getDescendantTextNodes';
 import { getLeafNodes } from './getLeafNodes';
 import { isElementNode } from './isElementNode';
-
-let getDescendantTextNodes = originalGetDescendantTextNodes;
 
 export function getTargetLeafNodeWithOffset(rootNode: Node, offset: number): INodeWithOffset | null {
   const leafNodes = getLeafNodes(rootNode);
@@ -32,8 +29,4 @@ export function getTargetLeafNodeWithOffset(rootNode: Node, offset: number): INo
     currentIndex += 1;
   }
   return targetLeafNode;
-}
-
-export function mockGetDescendantTextNodes(mock) {
-  getDescendantTextNodes = mock;
 }

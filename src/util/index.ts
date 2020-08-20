@@ -1,7 +1,11 @@
-export * from './elementMatchesSelector';
-export { getDescendantTextNodes } from './getDescendantTextNodes';
+export * from './convertNodeListToArray';
+export * from './validateSelection';
 export * from './getNodeElement';
+export * from './getSelectionRange';
 export * from './getSelectionRoot';
-export { getTargetLeafNodeWithOffset } from './getTargetLeafNodeWithOffset';
+export * from './getStartAndEndOffsets';
+export * from './getTargetLeafNodeWithOffset';
+export * from './isElementNode';
+export * from './isTextNode';
+export * from './orderElements';
 export * from './searchHierarchyForMatchingElement';
-export * from './selectionMatchesSelector';

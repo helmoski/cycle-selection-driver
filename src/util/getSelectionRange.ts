@@ -1,7 +1,8 @@
 import { ISelectionRange } from '../types';
 import { getNodeElement } from './getNodeElement';
+import { getStartAndEndOffsets } from './getStartAndEndOffsets';
 import { orderElements } from './orderElements';
-import { searchHierarchyForMatchingElement } from './searchHierarchyForMatchingElement';
+import { validateSelection } from './validateSelection';
 
 export function getSelectionRange(
   selection: Selection,
@@ -13,42 +14,18 @@ export function getSelectionRange(
     focusNode,
     focusOffset,
   } = selection;
-
   const anchorElement = getNodeElement(anchorNode);
   const focusElement = getNodeElement(focusNode);
-
-  // ensure valid selection (same root element that matches selector)
-  const anchorRootElement = searchHierarchyForMatchingElement(
-    anchorElement,
-    selector,
-  );
-  const focusRootElement = searchHierarchyForMatchingElement(
-    focusElement,
-    selector,
-  );
-  if (anchorRootElement !== focusRootElement) return null;
-  if (anchorRootElement === null) return null;
-
-  // determine start and end elements
+  const isValidSelection = validateSelection(anchorElement, focusElement, selector);
+  if (!isValidSelection) return null;
   const [startElement, endElement] = orderElements(anchorElement, focusElement);
-
-  // determine start and end offsets
-  let startOffset: number;
-  let endOffset: number;
-  if (anchorOffset === focusOffset) {
-    startOffset = anchorOffset;
-    endOffset = anchorOffset;
-  } else if (startElement === endElement) {
-    startOffset = Math.min(anchorOffset, focusOffset);
-    endOffset = Math.max(anchorOffset, focusOffset);
-  } else if (startElement === anchorElement) {
-    startOffset = anchorOffset;
-    endOffset = focusOffset;
-  } else {
-    startOffset = focusOffset;
-    endOffset = anchorOffset;
-  }
-  
+  const [startOffset, endOffset] = getStartAndEndOffsets(
+    startElement,
+    endElement,
+    anchorElement,
+    anchorOffset,
+    focusOffset,
+  );
   return {
     anchorNode,
     anchorOffset,
