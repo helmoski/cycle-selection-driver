@@ -10,9 +10,9 @@ import {
 export function selectionDriver(sink$: Stream<ITargetSelectionRange>): ISelectionSource {
   sink$.addListener({
     next: (range: ITargetSelectionRange | null): void => {
-      modifySelection(document, range);
+      modifySelection(range);
     },
   } as Partial<Listener<ITargetSelectionRange>>);
 
-  return new SelectionSource(document);
+  return new SelectionSource();
 }

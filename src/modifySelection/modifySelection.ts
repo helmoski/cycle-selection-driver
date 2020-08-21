@@ -1,19 +1,14 @@
 import { ITargetSelectionRange } from '../types';
+import { clearCurrentSelection } from './clearCurrentSelection';
+import { getNodeBasedOnRangeNode } from './getNodeBasedOnRangeNode';
 import { getTargetLeafNodeWithOffset } from './getTargetLeafNodeWithOffset';
+import { selectRange } from './selectRange';
 
-export function modifySelection(
-  document: Document,
-  range: ITargetSelectionRange | null,
-): void {
-  const selection = document.getSelection();
-  selection.removeAllRanges();
+export function modifySelection(range: ITargetSelectionRange | null): void {
+  clearCurrentSelection();
   if (range) {
-    const startRootNode = (range.startNode.hasOwnProperty('nodeType') ?
-      range.startNode :
-      document.querySelector(range.startNode as string)) as Node;
-    const endRootNode = (range.endNode.hasOwnProperty('nodeType') ?
-      range.endNode :
-      document.querySelector(range.endNode as string)) as Node;
+    const startRootNode = getNodeBasedOnRangeNode(range.startNode);
+    const endRootNode = getNodeBasedOnRangeNode(range.endNode);
 
     if (startRootNode === null) {
       throw new Error(`${range.startNode} does not exist`);
@@ -43,9 +38,12 @@ export function modifySelection(
     const startOffset = startLeafNodeWithOffset.offset;
     const endNode = endLeafNodeWithOffset.node;
     const endOffset = endLeafNodeWithOffset.offset;
-    const documentRange = document.createRange();
-    documentRange.setStart(startNode, startOffset);
-    documentRange.setEnd(endNode, endOffset);
-    selection.addRange(documentRange);
+
+    selectRange(
+      startNode,
+      startOffset,
+      endNode,
+      endOffset,
+    );
   }
 }

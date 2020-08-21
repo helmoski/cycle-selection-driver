@@ -21,6 +21,6 @@ describe('selectionDriver', () => {
     const range = {} as ITargetSelectionRange;
     const sink$ = xstream.of(range);
     selectionDriver(sink$);
-    expect(modifySelection).toHaveBeenCalledWith(document, range);
+    expect(modifySelection).toHaveBeenCalledWith(range);
   });
 });
