@@ -7,7 +7,7 @@ describe('isTextNode', () => {
 
     it('returns false', () => {
       const result = isTextNode(node);
-      expect(result).toBe(true);
+      expect(result).toBe(false);
     });
   });
 
@@ -16,7 +16,7 @@ describe('isTextNode', () => {
 
     it('returns true', () => {
       const result = isTextNode(node);
-      expect(result).toBe(false);
+      expect(result).toBe(true);
     });
   });
 });
