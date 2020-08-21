@@ -1,107 +1,100 @@
-// // tslint:disable:no-unused-expression
+import xs from 'xstream';
+import fromEvent from 'xstream/extra/fromEvent';
 
-// import * as chai from 'chai';
-// import { noop } from 'lodash';
-// import { stub } from 'sinon';
+import { getSelectionRange } from '../getSelectionRange';
+import { SelectionSource } from '../SelectionSource';
 
-// import 'mocha';
+jest.mock('xstream/extra/fromEvent');
+jest.mock('../getSelectionRange')
 
-// import { SelectionSource } from '../SelectionSource';
+describe('SelectionSource', () => {
+  const selectionSource = new SelectionSource();
+  
+  describe('selection stream', () => {
+    let selectionChangeProducer;
+    const selector = 'FAKE_SELECTOR';
+    const listener = {
+      error(e) {
+        console.error(e);
+        throw e;
+      },
+      next: jest.fn(),
+    }
 
-// const { expect } = chai;
-// const sinonChai = require('sinon-chai'); // tslint:disable-line:no-var-requires
-// chai.use(sinonChai);
+    beforeEach(() => {
+      selectionChangeProducer = xs.create();
+      (fromEvent as jest.Mock).mockReturnValue(selectionChangeProducer);
+    });
 
-// describe('SelectionSource', () => {
-//   const selector = '.target';
+    it('creates a stream based on the document `selectionchange` event', () => {
+      selectionSource.selections(selector);
+      expect(fromEvent).toHaveBeenCalledWith(document, 'selectionchange');
+    });
 
-//   describe('selections method', () => {
-//     it('should add a listener for the document selectionchange event', () => {
-//       const document = {
-//         addEventListener: stub(),
-//       };
-//       const selectionSource = new SelectionSource(document as any);
-//       selectionSource
-//         .selections(selector)
-//         .addListener({
-//           complete: noop,
-//           error: noop,
-//           next: noop,
-//         });
-//       expect(document.addEventListener).to.have.been.calledWith('selectionchange');
-//     });
+    describe('on selection change', () => {
+      const selectionRange = 'FAKE_SELECTION_RANGE';
 
-//     it('should get the selection when the selectionchange event is emitted', () => {
-//       const document = {
-//         addEventListener: stub(),
-//         getSelection: stub(),
-//       };
-//       const selectionSource = new SelectionSource(document as any);
-//       const listener = {
-//         complete: noop,
-//         error: noop,
-//         next: noop,
-//       };
-//       selectionSource
-//         .selections(selector)
-//         .addListener(listener);
-//       const emitEvent = document.addEventListener.firstCall.args[1];
-//       emitEvent();
-//       expect(document.getSelection).to.have.been.calledOnce;
-//     });
+      beforeAll(() => {
+        (getSelectionRange as jest.Mock).mockReturnValue(selectionRange);
+      });
 
-//     describe('returned stream', () => {
-//       it('should emit the updated selection when the selectionchange event is emitted for the specified selector', () => {
-//         const document = {
-//           addEventListener: stub(),
-//           getSelection: stub(),
-//         };
-//         const matchingElement = { matches: () => true };
-//         const nonMatchingElement = {
-//           matches: () => false,
-//           parentElement: null,
-//         };
-//         const matchingNode = { parentElement: matchingElement };
-//         const nonMatchingNode = { parentElement: nonMatchingElement };
-//         const selection1 = {
-//           anchorNode: matchingNode,
-//           focusNode: matchingNode,
-//         };
-//         const selection2 = {
-//           anchorNode: matchingNode,
-//           focusNode: matchingNode,
-//         };
-//         const selection3 = {
-//           anchorNode: nonMatchingNode,
-//           focusNode: nonMatchingNode,
-//         };
-//         const selection4 = {
-//           anchorNode: nonMatchingNode,
-//           focusNode: nonMatchingNode,
-//         };
-//         document.getSelection.onCall(0).returns(selection1);
-//         document.getSelection.onCall(1).returns(selection2);
-//         document.getSelection.onCall(2).returns(selection3);
-//         document.getSelection.onCall(3).returns(selection4);
-//         const selectionSource = new SelectionSource(document as any);
-//         const listener = {
-//           complete: noop,
-//           error: noop,
-//           next: stub(),
-//         } as any;
-//         selectionSource
-//           .selections(selector)
-//           .addListener(listener);
-//         const emitEvent = document.addEventListener.firstCall.args[1];
-//         emitEvent();
-//         emitEvent();
-//         emitEvent();
-//         emitEvent();
-//         expect(listener.next).to.have.been.calledThrice;
-//         expect(listener.next.firstCall.calledWithExactly(selection1)).to.be.true;
-//         expect(listener.next.secondCall.calledWithExactly(selection2)).to.be.true;
-//         expect(listener.next.thirdCall.calledWithExactly(null)).to.be.true;
-//       });
-//     });
-//   });
-// });
+      it('gets the selection range', () => {
+        const selection$ = selectionSource.selections(selector);
+        selection$.addListener(listener);
+        selectionChangeProducer.shamefullySendNext(null);
+        expect(getSelectionRange).toHaveBeenCalledWith(
+          document.getSelection(),
+          selector,
+        );      
+      });
+
+      describe('with valid selection', () => {
+        it('emits the selection range', () => {
+          const selection$ = selectionSource.selections(selector);
+          selection$.addListener(listener);
+          selectionChangeProducer.shamefullySendNext(null);
+          expect(listener.next).toHaveBeenCalledWith(selectionRange);
+        });
+
+        describe('after previous invalid selection', () => {
+          it('emits both selection ranges', () => {
+            const selection$ = selectionSource.selections(selector);
+            selection$.addListener(listener);
+            selectionChangeProducer.shamefullySendNext(null);
+            selectionChangeProducer.shamefullySendNext(null);
+            expect(listener.next).toHaveBeenCalledTimes(2);
+            expect(listener.next).toHaveBeenCalledWith(selectionRange);
+            expect(listener.next).toHaveBeenCalledWith(selectionRange);
+          });
+        });
+      });
+
+      describe('with invalid selection', () => {
+        beforeEach(() => {
+          (getSelectionRange as jest.Mock).mockReturnValueOnce(null);
+        });
+
+        it('emits null', () => {
+          const selection$ = selectionSource.selections(selector);
+          selection$.addListener(listener);
+          selectionChangeProducer.shamefullySendNext(null);
+          expect(listener.next).toHaveBeenCalledWith(null);
+        });
+
+        describe('after previous invalid selection', () => {
+          beforeEach(() => {
+            (getSelectionRange as jest.Mock).mockReturnValueOnce(null);
+          });
+
+          it('does not emit null a second time', () => {
+            const selection$ = selectionSource.selections(selector);
+            selection$.addListener(listener);
+            selectionChangeProducer.shamefullySendNext(null);
+            selectionChangeProducer.shamefullySendNext(null);
+            expect(listener.next).toHaveBeenCalledTimes(1);
+          });
+        });
+      });
+    });
+  });
+});
