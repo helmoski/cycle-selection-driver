@@ -1,8 +1,9 @@
+import { NodeType } from '../../types';
 import { isElementNode } from '../isElementNode';
 
 describe('isElementNode', () => {
   describe('for element node', () => {
-    const node = { nodeType: 1 } as any;
+    const node = { nodeType: NodeType.ElementNode } as any;
 
     it('returns true', () => {
       const result = isElementNode(node);
@@ -11,7 +12,7 @@ describe('isElementNode', () => {
   });
 
   describe('for text node', () => {
-    const node = { nodeType: 3 } as any;
+    const node = { nodeType: NodeType.TextNode } as any;
 
     it('returns false', () => {
       const result = isElementNode(node);

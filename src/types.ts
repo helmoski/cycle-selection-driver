@@ -27,3 +27,14 @@ export interface ITargetSelectionRange {
   startNode: Node | string;
   startOffset: number;
 }
+
+export enum NodeType {
+  CDataSectionNode = 4,
+  CommentNode = 8,
+  DocumentFragmentNode = 11,
+  DocumentNode = 9,
+  DocumentTypeNode = 10,
+  ElementNode = 1,
+  ProcessingInstructionNode = 7,
+  TextNode = 3,
+}

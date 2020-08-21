@@ -1,3 +1,4 @@
+import { NodeType } from '../../types';
 import { getLeafNodes } from '../getLeafNodes';
 import { getTargetLeafNodeWithOffset } from '../getTargetLeafNodeWithOffset';
 
@@ -7,18 +8,18 @@ describe('getTargetLeafNodeWithOffset', () => {
   const rootNode = 'FAKE_ROOT_NODE' as any;
   const offset = 5;
   const brNode1 = {
-    nodeType: 1,
+    nodeType: NodeType.ElementNode,
     tagName: 'BR',
   };
   const brNode2 = { ...brNode1 };
   const textNode1 = {
     length: 2,
-    nodeType: 3,
+    nodeType: NodeType.TextNode,
     text: 'ab',
   };
   const textNode2 = {
     length: 1,
-    nodeType: 3,
+    nodeType: NodeType.TextNode,
     text: 'c',
   };
   const leafNodesWithBrTarget = [

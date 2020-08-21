@@ -1,9 +1,10 @@
+import { NodeType } from '../../types';
 import { getNodeElement } from '../getNodeElement';
 
 describe('getNodeElement', () => {
-  const elementNode = { nodeType: 1 } as any;
+  const elementNode = { nodeType: NodeType.ElementNode } as any;
   const textNode = {
-    nodeType: 3,
+    nodeType: NodeType.TextNode,
     parentElement: elementNode,
   } as any;
 
