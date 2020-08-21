@@ -1,52 +1,26 @@
-// // tslint:disable:no-unused-expression
+import xstream, { Stream } from 'xstream';
 
-// import { expect } from 'chai';
-// import { SinonSpy, spy, stub } from 'sinon';
-// import xstream, { Listener, Stream } from 'xstream';
+import { modifySelection } from '../modifySelection';
+import { selectionDriver } from '../selectionDriver';
+import { ITargetSelectionRange } from '../types';
 
-// import 'mocha';
+jest.mock('../modifySelection');
+jest.mock('../SelectionSource');
 
-// import { IRange } from '../ISelectionRange';
-// import { ISelectionSource } from '../ISelectionSource';
-// import { selectionDriver, setDocument, setModifySelection } from '../selectionDriver';
+describe('selectionDriver', () => {
+  const doc = {} as any;
 
-// describe('selectionDriver', () => {
-//   const doc = {} as any;
-//   let modifySelectionStub;
+  it('returns an instance of ISelectionSource', () => {
+    const sink$ = new Stream<ITargetSelectionRange>();
+    const result = selectionDriver(sink$);
+    expect(result).toBeDefined();
+    expect(result).toHaveProperty('selections');
+  });
 
-//   before(() => {
-//     setDocument(doc);
-//     modifySelectionStub = stub();
-//     setModifySelection(modifySelectionStub);
-//   });
-
-//   afterEach(() => {
-//     modifySelectionStub.reset();
-//   });
-
-//   it('returns an instance of ISelectionSource', () => {
-//     const sink$ = new Stream<IRange[] | IRange>();
-//     const result = selectionDriver(sink$);
-//     expect(result).to.exist;
-//     expect(result).to.have.property('selections');
-//   });
-
-//   it('modifies the selection when an event with a single range is emitted', () => {
-//     const range = {} as IRange;
-//     const sink$ = xstream.of(range);
-//     selectionDriver(sink$);
-//     expect(modifySelectionStub).to.have.been.calledOnce;
-//     const args = modifySelectionStub.firstCall.args;
-//     expect(args[0]).to.equal(doc);
-//     expect(args[1]).to.be.an('array').with.lengthOf(1);
-//     expect(args[1][0]).to.equal(range);
-//   });
-
-//   it('modifies the selection when an event with multiple ranges is emitted', () => {
-//     const ranges = [{}, {}] as IRange[];
-//     const sink$ = xstream.of(ranges);
-//     selectionDriver(sink$);
-//     expect(modifySelectionStub)
-//       .to.have.been.calledOnce.and.calledWithExactly(doc, ranges);
-//   });
-// });
+  it('modifies the selection when an event with a target range is emitted', () => {
+    const range = {} as ITargetSelectionRange;
+    const sink$ = xstream.of(range);
+    selectionDriver(sink$);
+    expect(modifySelection).toHaveBeenCalledWith(document, range);
+  });
+});
