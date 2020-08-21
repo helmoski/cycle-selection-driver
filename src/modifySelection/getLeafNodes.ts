@@ -1,6 +1,9 @@
+import {
+  isElementNode,
+  isTextNode,
+} from '../util';
 import { convertNodeListToArray } from './convertNodeListToArray';
-import { isElementNode } from './isElementNode';
-import { isTextNode } from './isTextNode';
+
 
 export function getLeafNodes(rootNode: Node) {
   const leafNodes = [];

@@ -6,7 +6,7 @@ module.exports = {
   ],
   coveragePathIgnorePatterns: [
     '.*/index.ts',
-    '/__tests__/util/',
+    '.*/__tests__/.*',
   ],
   coverageReporters: [
     'text',

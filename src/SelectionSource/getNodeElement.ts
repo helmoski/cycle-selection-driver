@@ -1,4 +1,4 @@
-import { isElementNode } from './isElementNode';
+import { isElementNode } from '../util';
 
 export const getNodeElement = (
   node: Node,

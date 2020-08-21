@@ -1,6 +1,7 @@
 import { INodeWithOffset } from '../types';
+import { isElementNode } from '../util';
 import { getLeafNodes } from './getLeafNodes';
-import { isElementNode } from './isElementNode';
+
 
 export function getTargetLeafNodeWithOffset(rootNode: Node, offset: number): INodeWithOffset | null {
   const leafNodes = getLeafNodes(rootNode);

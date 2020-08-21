@@ -1,5 +1,5 @@
-import { ITargetSelectionRange } from './types';
-import { getTargetLeafNodeWithOffset } from './util';
+import { ITargetSelectionRange } from '../types';
+import { getTargetLeafNodeWithOffset } from './getTargetLeafNodeWithOffset';
 
 export function modifySelection(
   document: Document,

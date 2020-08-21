@@ -6,8 +6,8 @@ import fromEvent from 'xstream/extra/fromEvent';
 import {
   ISelectionSource,
   ISelectionRange,
-} from './types';
-import { getSelectionRange } from './util/getSelectionRange';
+} from '../types';
+import { getSelectionRange } from './getSelectionRange';
 
 export class SelectionSource implements ISelectionSource {
   private document: Document;
