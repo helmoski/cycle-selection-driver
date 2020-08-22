@@ -1,8 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: path.resolve(__dirname, 'index.ts'),
   output: {
     filename: 'bundle.js',
@@ -12,14 +13,14 @@ module.exports = {
     extensions: ['.js', '.ts'],
   },
   module: {
-    loaders: [
+    rules: [
       { test: /\.ts?$/, loader: 'ts-loader' }
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Test Site',
-    })
+    }),
   ]
 };
