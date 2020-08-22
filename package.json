@@ -12,7 +12,7 @@
     "clean": "run-p clean:*",
     "clean:dist": "rm -Rf dist",
     "clean:test-site": "rm -Rf ./test-site/dist",
-    "coveralls": "coveralls < coverage/lcov.info",
+    "coveralls": "cat ./coverage/lcov.info && cat ./coverage/lcov.info | coveralls",
     "lint": "tslint --format stylish --project ./tsconfig.json ./src/**/*.ts",
     "prepublishOnly": "run-s build:prod",
     "serve:test-site": "http-server ./test-site/dist",
