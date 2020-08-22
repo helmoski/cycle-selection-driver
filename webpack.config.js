@@ -30,6 +30,12 @@ module.exports = {
       amd: 'xstream',
       root: 'xstream',
     },
+    'xstream/extra/dropRepeats': {
+      commonjs: 'xstream/extra/dropRepeats',
+      commonjs2: 'xstream/extra/dropRepeats',
+      amd: 'xstream/extra/dropRepeats',
+      root: 'dropRepeats',
+    },
     'xstream/extra/fromEvent': {
       commonjs: 'xstream/extra/fromEvent',
       commonjs2: 'xstream/extra/fromEvent',
