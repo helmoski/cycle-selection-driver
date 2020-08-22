@@ -33,11 +33,11 @@
   },
   "homepage": "https://github.com/helmoski/cycle-selection-driver#readme",
   "dependencies": {
-    "@cycle/run": "^5.2.0",
-    "xstream": "^11.11.0"
+    "@cycle/run": "^5.4.0",
+    "xstream": "^11.12.0"
   },
   "devDependencies": {
-    "@cycle/dom": "^22.3.0",
+    "@cycle/dom": "^22.7.0",
     "@size-limit/preset-small-lib": "^4.5.7",
     "@types/jest": "^26.0.10",
     "@types/lodash": "^4.14.91",
