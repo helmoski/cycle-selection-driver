@@ -1,5 +1,4 @@
 import { b, br, button, div, li, MainDOMSource, p, pre, ul, VNode } from '@cycle/dom';
-import { isNull } from 'lodash';
 import xstream, { Stream } from 'xstream';
 
 import {
@@ -83,27 +82,27 @@ export default function app(sources: ISources): ISinks {
         pre([
           'Current Selection:',
           br(),
-          isNull(selectionRange) ? 'N/A' : selectionRange.text,
+          selectionRange === null ? 'N/A' : selectionRange.text,
         ]),
         pre([
           'Start Element:',
           br(),
-          isNull(selectionRange) ? 'N/A' : selectionRange.startElement.outerHTML,
+          selectionRange === null ? 'N/A' : selectionRange.startElement.outerHTML,
         ]),
         pre([
           'Start Offset:',
           br(),
-          isNull(selectionRange) ? 'N/A' : selectionRange.startOffset,
+          selectionRange === null ? 'N/A' : selectionRange.startOffset,
         ]),
         pre([
           'End Element:',
           br(),
-          isNull(selectionRange) ? 'N/A' : selectionRange.endElement.outerHTML,
+          selectionRange === null ? 'N/A' : selectionRange.endElement.outerHTML,
         ]),
         pre([
           'End Offset:',
           br(),
-          isNull(selectionRange) ? 'N/A' : selectionRange.endOffset,
+          selectionRange === null ? 'N/A' : selectionRange.endOffset,
         ]),
         br(),
         button('#select-second-word', 'Select Second Word'),
