@@ -15,55 +15,7 @@ npm install cycle-selection-driver --save
 
 ## Usage
 
-```js
-import { br, div, label, makeDOMDriver, p, textarea } from '@cycle/dom';
-import { run } from '@cycle/run';
-import { timeDriver } from '@cycle/time';
-import { selectionDriver } from 'cycle-selection-driver';
-
-function main (sources) {
-  const vdom$ = sources.Selection.selections()
-    .startWith(null)
-    .map(selection => div([
-      p(
-        '#editable-paragraph',
-        { attrs: { contenteditable: true } },
-        [
-          'This ',
-          b('is'),
-          ' an editable region.',
-        ],
-      ),
-      label({ attrs: { for: 'current-selection' } } , 'Current Selection'),
-      br(),
-      textarea(
-        '#current-selection',
-        { attrs: { readonly: 'readonly' } },
-        isNull(selection) ? 'Nothing selected' : selection.toString(),
-      ),
-    ]));
-
-  // selects the 2nd word every 5 seconds
-  const select2ndWord$ = sources.Time.periodic(5000)
-    .map(() => ({
-      startNode: '#editable-paragraph',
-      startOffset: 5,
-      endNode: '#editable-paragraph',
-      endOffset: 7,
-    }));
-
-  return {
-    DOM: vdom$,
-    selection: select2ndWord$,
-  };
-}
-
-run(main, {
-  DOM: makeDOMDriver('.app'),
-  Selection: selectionDriver,
-  Time: timeDriver,
-});
-```
+See `test-site` directory for usage example.
 
 ## API
 
@@ -71,11 +23,15 @@ run(main, {
 
 A Cycle.js driver that returns a `SelectionSource`.
 
-### Arguments
+#### Arguments
 
 `sink$`
 
-A stream of `IRange` objects or `IRange` arrays. When the sink stream emits an event, the specified range(s) will be selected.
+A stream of `ITargetSelectionRange` objects. When the sink stream emits an event, the specified range will be selected.
+
+#### Returns
+
+`SelectionSource`
 
 ### `SelectionSource`
 
@@ -83,30 +39,46 @@ A Cycle.js source that provides access to user selections.
 
 #### Methods
 
-`.selections()`
+`.selections(selector)`
 
-Returns a stream of `Selection` objects. The current `Selection` will be emitted each time the [`selectionchange`](https://developer.mozilla.org/en-US/docs/Web/Events/selectionchange) event is fired.
+Returns a stream of `ISelectionRange` objects which represent the current user selection. The stream will emit each time the [`selectionchange`](https://developer.mozilla.org/en-US/docs/Web/Events/selectionchange) event is fired and the selection matches the specified selector. `null` will be emitted when the selection changes to no longer match the specified selector.
 
-### `Selection`
+##### Arguments
 
-A [`Selection`](https://developer.mozilla.org/en-US/docs/Web/API/Selection) object representing the range of text selected by the user or the current position of the caret.
+`selector`
 
-It is recommended that you avoid using the mutational methods of the `Selection` object because doing so would constitute as a side effect. To update the selection, use the driver `sink$`.
+A string that allows you to filter the selections to a specific element and its descendants. Selections that occur in an element that doesn't match the selector will be ignored. The selector should be a valid css selector string.
 
-### `IRange`
+##### Returns
 
-An object representing a [`Range`](https://developer.mozilla.org/en-US/docs/Web/API/Range); albeit, with a slight difference: The offset in `IRange` represents characters; whereas, the offset in a `Range` can represent characters or nodes depending on the type of node.
+`ISelectionRange` for selection change events that match the specified selector; else, `null`.
 
-### Properties
+### `ISelectionRange`
 
-`startNode` - The node that the start of the range is in
+A range of text selected by the user or the current position of the caret.
 
-`startOffset` - The character offset of the start of the range within the start node
+#### Properties
 
-`endNode` - The node that the end of the range is in
+* `anchorNode` - The node where the user began their selection
+* `anchorOffset` - Character offset relative to the `anchorNode` where the user began their selection
+* `endElement` - Element where the selection ends (matches or comes after the `startElement`)
+* `endOffset` - Character offset relative to the `endElement` where the selection ends (matches or comes after the `startOffset`)
+* `focusNode` - The node where the user finished their selection
+* `focusOffset` - Character offset relative to the `focusNode` where the user finished their selection
+* `startElement` - Element where the selection starts (matches or comes before the `endElement`)
+* `startOffset` - Character offset relative to the `startElement` where the selection starts (matches or comes before the `endOffset`)
+* `text` - Selected text
 
-`endOffset` The character offset of the end of the range within the end node.
+### `ITargetSelectionRange`
 
+An object representing a range of text to be selected.
+
+#### Properties
+
+* `endNode` - Node or css selector matching the node where the selection should end
+* `endOffset` - Character offset of the end of the selection range relative to the `endNode`.
+* `startNode` - Node or css selector matching the node where the selection should start
+* `startOffset` - Character offset of the start of the selection range relative to the `startNode`
 ---
 
 Find other Cycle.js libraries and resources at [Awesome Cycle.js](https://github.com/cyclejs-community/awesome-cyclejs)
