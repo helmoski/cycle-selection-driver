@@ -6,7 +6,7 @@ import { selectRange } from './selectRange';
 
 export function modifySelection(range: ITargetSelectionRange | null): void {
   clearCurrentSelection();
-  if (range) {
+  if (range !== null) {
     const startRootNode = getNodeBasedOnRangeNode(range.startNode);
     const endRootNode = getNodeBasedOnRangeNode(range.endNode);
 
@@ -27,10 +27,10 @@ export function modifySelection(range: ITargetSelectionRange | null): void {
       range.endOffset,
     );
 
-    if (!startLeafNodeWithOffset) {
+    if (startLeafNodeWithOffset === null) {
       throw new Error('Start offset out of bounds');
     }
-    if (!endLeafNodeWithOffset) {
+    if (endLeafNodeWithOffset === null) {
       throw new Error('End offset out of bounds');
     }
 

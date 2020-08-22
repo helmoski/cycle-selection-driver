@@ -2,15 +2,17 @@ import { INodeWithOffset } from '../types';
 import { isElementNode } from '../util';
 import { getLeafNodes } from './getLeafNodes';
 
-
-export function getTargetLeafNodeWithOffset(rootNode: Node, offset: number): INodeWithOffset | null {
+export function getTargetLeafNodeWithOffset(
+  rootNode: Node,
+  offset: number,
+): INodeWithOffset | null {
   const leafNodes = getLeafNodes(rootNode);
   let targetLeafNode = null as INodeWithOffset | null;
   let remainingOffset = offset;
   let currentIndex = 0;
-  while (!targetLeafNode && currentIndex < leafNodes.length) {
+  while (targetLeafNode === null && currentIndex < leafNodes.length) {
     const leafNode = leafNodes[currentIndex];
-    if (isElementNode(leafNode)) {
+    if (isElementNode(leafNode) as boolean) {
       remainingOffset -= 1;
       if (remainingOffset <= 0) {
         targetLeafNode = {

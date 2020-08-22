@@ -17,7 +17,9 @@ export function getSelectionRange(
   const anchorElement = getNodeElement(anchorNode);
   const focusElement = getNodeElement(focusNode);
   const isValidSelection = validateSelection(anchorElement, focusElement, selector);
-  if (!isValidSelection) return null;
+  if (!isValidSelection) {
+    return null;
+  }
   const [startElement, endElement] = orderElements(anchorElement, focusElement);
   const [startOffset, endOffset] = getStartAndEndOffsets(
     startElement,
