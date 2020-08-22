@@ -5,7 +5,7 @@
     "moduleResolution": "node",
     "outDir": "./dist/",
     "declaration": true,
-    "declarationDir": "./types",
+    "declarationDir": "./dist/types",
     "strict": false
   },
   "include": [

@@ -1,2 +1,2 @@
-export { getDescendantTextNodes } from './getDescendantTextNodes';
-export { getTargetTextNode } from './getTargetTextNode';
+export * from './isElementNode';
+export * from './isTextNode';

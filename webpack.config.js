@@ -1,7 +1,8 @@
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
+  mode: process.env.NODE_ENV || 'development',
   entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -13,7 +14,7 @@ module.exports = {
     extensions: ['.js', '.ts'],
   },
   module: {
-    loaders: [
+    rules: [
       { test: /\.ts?$/, loader: 'ts-loader' }
     ]
   },
@@ -30,6 +31,12 @@ module.exports = {
       amd: 'xstream',
       root: 'xstream',
     },
+    'xstream/extra/dropRepeats': {
+      commonjs: 'xstream/extra/dropRepeats',
+      commonjs2: 'xstream/extra/dropRepeats',
+      amd: 'xstream/extra/dropRepeats',
+      root: 'dropRepeats',
+    },
     'xstream/extra/fromEvent': {
       commonjs: 'xstream/extra/fromEvent',
       commonjs2: 'xstream/extra/fromEvent',
@@ -38,6 +45,6 @@ module.exports = {
     }
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
   ],
 };

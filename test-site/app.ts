@@ -1,8 +1,11 @@
-import { b, br, button, div, label, MainDOMSource, p, textarea, VNode } from '@cycle/dom';
-import { isNull } from 'lodash';
+import { b, br, button, div, li, MainDOMSource, p, pre, ul, VNode } from '@cycle/dom';
 import xstream, { Stream } from 'xstream';
 
-import { IRange, ISelection, ISelectionSource } from '../dist/cycle-selection-driver';
+import {
+  ISelectionRange,
+  ISelectionSource,
+  ITargetSelectionRange,
+} from '../dist/cycle-selection-driver';
 
 interface ISources {
   DOM: MainDOMSource;
@@ -11,61 +14,99 @@ interface ISources {
 
 interface ISinks {
   DOM: Stream<VNode>;
-  Selection: Stream<Range[]>;
+  Selection: Stream<ITargetSelectionRange[]>;
 }
 
 export default function app(sources: ISources): ISinks {
   const selection$ = sources.Selection
-    .selections();
+    .selections('#editable-paragraph');
 
   const select2ndWord$ = sources.DOM
     .select('#select-second-word')
     .events('click')
-    .map((): IRange => ({
-      startNode: '#editable-paragraph',
-      startOffset: 5,
-      endNode: '#editable-paragraph',
-      endOffset: 7,
+    .map((): ITargetSelectionRange => ({
+      startNode: '#second-word',
+      startOffset: 0,
+      endNode: '#second-word',
+      endOffset: 5,
     }));
 
-  const moveCaretToEnd$ = sources.DOM
-    .select('#move-caret-to-end')
+  const selectEmptyLine$ = sources.DOM
+    .select('#select-empty-line')
     .events('click')
-    .map((): IRange => ({
-      startNode: '#editable-paragraph',
-      startOffset: 27,
-      endNode: '#editable-paragraph',
-      endOffset: 27,
+    .map((): ITargetSelectionRange => ({
+      startNode: '#empty-line',
+      startOffset: 0,
+      endNode: '#empty-line',
+      endOffset: 0,
     }));
 
-  const newSelection$ = xstream.merge(select2ndWord$, moveCaretToEnd$);
+  const newSelection$ = xstream.merge(select2ndWord$, selectEmptyLine$);
 
-  const event$ = xstream.merge(selection$, newSelection$);
-
-  const vdom$: Stream<VNode> = event$
+  const vdom$: Stream<VNode> = selection$
     .startWith(null as any)
-    .filter(event => event instanceof Selection || event === null)
-    .map((selection: Selection) => {
+    .map((selectionRange: ISelectionRange) => {
       return div([
-        p(
+        div(
           '#editable-paragraph',
           { attrs: { contenteditable: true } },
           [
-            'This ',
-            b('is'),
-            ' an editable region.',
+            p([
+              'Lorem ',
+              b(
+                '#second-word',
+                ['ipsum']
+              ),
+              ' dolor',
+            ]),
+            p(
+              '#empty-line',
+              [br()],
+            ),
+            p('Wombat'),
+            ul([
+              li('Lorem'),
+              li([
+                br(),
+              ]),
+              li('Ipsum'),
+              ul([
+                li('foo'),
+                li('bar'),
+              ]),
+              li('Dolor'),
+            ])
           ],
         ),
-        label({ attrs: { for: 'current-selection' } } , 'Current Selection'),
         br(),
-        textarea(
-          '#current-selection',
-          { attrs: { readonly: 'readonly' } },
-          isNull(selection) ? 'Nothing selected' : selection.toString(),
-        ),
+        pre([
+          'Current Selection:',
+          br(),
+          selectionRange === null ? 'N/A' : selectionRange.text,
+        ]),
+        pre([
+          'Start Element:',
+          br(),
+          selectionRange === null ? 'N/A' : selectionRange.startElement.outerHTML,
+        ]),
+        pre([
+          'Start Offset:',
+          br(),
+          selectionRange === null ? 'N/A' : selectionRange.startOffset,
+        ]),
+        pre([
+          'End Element:',
+          br(),
+          selectionRange === null ? 'N/A' : selectionRange.endElement.outerHTML,
+        ]),
+        pre([
+          'End Offset:',
+          br(),
+          selectionRange === null ? 'N/A' : selectionRange.endOffset,
+        ]),
         br(),
         button('#select-second-word', 'Select Second Word'),
-        button('#move-caret-to-end', 'Move Caret to End'),
+        button('#select-empty-line', 'Select Empty Line'),
       ]);
     });
 

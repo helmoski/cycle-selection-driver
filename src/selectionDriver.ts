@@ -1,38 +1,18 @@
-import { Driver } from '@cycle/run';
 import { Listener, Stream } from 'xstream';
 
-import { IRange } from './IRange';
-import { ISelectionSource } from './ISelectionSource';
-import { modifySelection as originalModifySelection } from './modifySelection';
+import { modifySelection } from './modifySelection';
 import { SelectionSource } from './SelectionSource';
+import {
+  ISelectionSource,
+  ITargetSelectionRange,
+} from './types';
 
-let document: Document;
-let modifySelection = originalModifySelection;
-
-export function selectionDriver(sink$: Stream<IRange[] | IRange>): ISelectionSource {
-  /* istanbul ignore if */
-  if (document === undefined) {
-    document = window.document;
-  }
-
+export function selectionDriver(sink$: Stream<ITargetSelectionRange>): ISelectionSource {
   sink$.addListener({
-    next: (event: IRange[] | IRange): void => {
-      const ranges = event instanceof Array ? event : [event];
-      modifySelection(document, ranges);
+    next: (range: ITargetSelectionRange | null): void => {
+      modifySelection(range);
     },
-  } as Partial<Listener<IRange[]>>);
+  } as Partial<Listener<ITargetSelectionRange>>);
 
-  return new SelectionSource(document);
+  return new SelectionSource();
 }
-
-export function setDocument(doc: Document) {
-  document = doc;
-}
-
-export function setModifySelection(
-  newModifySelection: (document: Document, ranges: IRange[]) => void,
-) {
-  modifySelection = newModifySelection;
-}
-
-export default selectionDriver;
