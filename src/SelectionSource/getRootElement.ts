@@ -1,10 +1,10 @@
 import { searchHierarchyForMatchingElement } from './searchHierarchyForMatchingElement';
 
-export function validateSelection(
+export function getRootElement(
   anchorElement: HTMLElement,
   focusElement: HTMLElement,
   selector: string,
-): boolean {
+): HTMLElement {
   const anchorRootElement = searchHierarchyForMatchingElement(
     anchorElement,
     selector,
@@ -13,5 +13,9 @@ export function validateSelection(
     focusElement,
     selector,
   );
-  return anchorRootElement === focusRootElement && anchorRootElement !== null;
+  return (
+    anchorRootElement === focusRootElement
+      ? anchorRootElement
+      : null
+  );
 }

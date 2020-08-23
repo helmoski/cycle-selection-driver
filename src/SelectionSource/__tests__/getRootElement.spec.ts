@@ -1,9 +1,9 @@
-import { validateSelection } from '../validateSelection';
+import { getRootElement } from '../getRootElement';
 import { searchHierarchyForMatchingElement } from '../searchHierarchyForMatchingElement';
 
 jest.mock('../searchHierarchyForMatchingElement');
 
-describe('validateSelection', () => {
+describe('getRootElement', () => {
   const anchorElement = 'FAKE_ANCHOR_ELEMENT' as any;
   const focusElement = 'FAKE_FOCUS_ELEMENT' as any;
   const selector = 'FAKE_SELECTOR';
@@ -15,7 +15,7 @@ describe('validateSelection', () => {
   });
 
   it('gets the root element for the anchor element', () => {
-    validateSelection(
+    getRootElement(
       anchorElement,
       focusElement,
       selector,
@@ -27,7 +27,7 @@ describe('validateSelection', () => {
   });
 
   it('gets the root element for the focus element', () => {
-    validateSelection(
+    getRootElement(
       anchorElement,
       focusElement,
       selector,
@@ -40,13 +40,13 @@ describe('validateSelection', () => {
 
   describe('when anchor and focus have the same root element', () => {
     describe('that matches the selector', () => {
-      it('returns true', () => {
-        const result = validateSelection(
+      it('returns the root element', () => {
+        const result = getRootElement(
           anchorElement,
           focusElement,
           selector,
         );
-        expect(result).toBe(true);
+        expect(result).toBe(rootElement);
       });
     });
 
@@ -57,13 +57,13 @@ describe('validateSelection', () => {
           .mockReturnValueOnce(null);
       });
 
-      it('returns false', () => {
-        const result = validateSelection(
+      it('returns null', () => {
+        const result = getRootElement(
           anchorElement,
           focusElement,
           selector,
         );
-        expect(result).toBe(false);
+        expect(result).toBeNull()
       });
     });
   });
@@ -74,13 +74,13 @@ describe('validateSelection', () => {
         .mockReturnValueOnce('OTHER_ROOT_ELEMENT');
     });
 
-    it('returns false', () => {
-      const result = validateSelection(
+    it('returns null', () => {
+      const result = getRootElement(
         anchorElement,
         focusElement,
         selector,
       );
-      expect(result).toBe(false);
+      expect(result).toBeNull()
     });
   });
 });

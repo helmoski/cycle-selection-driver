@@ -2,12 +2,12 @@ import { getNodeElement } from '../getNodeElement';
 import { getSelectionRange } from '../getSelectionRange';
 import { getStartAndEndOffsets } from '../getStartAndEndOffsets';
 import { orderElements } from '../orderElements';
-import { validateSelection } from '../validateSelection';
+import { getRootElement } from '../getRootElement';
 
 jest.mock('../getNodeElement');
 jest.mock('../getStartAndEndOffsets');
 jest.mock('../orderElements');
-jest.mock('../validateSelection');
+jest.mock('../getRootElement');
 
 describe('getSelectionRange', () => {
   const anchorNode = 'FAKE_ANCHOR_NODE';
@@ -25,13 +25,14 @@ describe('getSelectionRange', () => {
   const selector = 'FAKE_SELECTOR';
   const anchorElement = 'FAKE_ANCHOR_ELEMENT';
   const focusElement = 'FAKE_FOCUS_ELEMENT';
+  const rootElement = 'FAKE_ROOT_ELEMENT';
   const startElement = 'FAKE_START_ELEMENT';
   const endElement = 'FAKE_END_ELEMENT';
   const startOffset = anchorOffset;
   const endOffset = focusOffset;
 
   beforeAll(() => {
-    (validateSelection as jest.Mock).mockReturnValue(true);
+    (getRootElement as jest.Mock).mockReturnValue(rootElement);
     (orderElements as jest.Mock).mockReturnValue([startElement, endElement]);
     (getStartAndEndOffsets as jest.Mock).mockReturnValue([startOffset, endOffset]);
   });
@@ -51,18 +52,18 @@ describe('getSelectionRange', () => {
     expect(getNodeElement).toHaveBeenCalledWith(focusNode);
   });
 
-  it('validates the selection', () => {
+  it('gets the root element for the selection', () => {
     getSelectionRange(selection, selector);
-    expect(validateSelection).toHaveBeenCalledWith(
+    expect(getRootElement).toHaveBeenCalledWith(
       anchorElement,
       focusElement,
       selector,
     );
   });
 
-  describe('when the selection is invalid', () => {
+  describe('when the selection does not fall within a root element', () => {
     beforeEach(() => {
-      (validateSelection as jest.Mock).mockReturnValueOnce(false);
+      (getRootElement as jest.Mock).mockReturnValueOnce(null);
     });
 
     it('returns null', () => {
@@ -71,7 +72,7 @@ describe('getSelectionRange', () => {
     });
   });
 
-  describe('when the selection is valid', () => {
+  describe('when the selection falls within a root element', () => {
     it('determines the start and end elements', () => {
       getSelectionRange(selection, selector);
       expect(orderElements).toHaveBeenCalledWith(
@@ -105,6 +106,7 @@ describe('getSelectionRange', () => {
         endOffset,
         focusNode,
         focusOffset,
+        rootElement,
         startElement,
         startOffset,
         text: selectionText,

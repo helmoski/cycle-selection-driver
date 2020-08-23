@@ -104,6 +104,11 @@ export default function app(sources: ISources): ISinks {
           br(),
           selectionRange === null ? 'N/A' : selectionRange.endOffset,
         ]),
+        pre([
+          'Root Element:',
+          br(),
+          selectionRange === null ? 'N/A' : selectionRange.rootElement.id,
+        ]),
         br(),
         button('#select-second-word', 'Select Second Word'),
         button('#select-empty-line', 'Select Empty Line'),

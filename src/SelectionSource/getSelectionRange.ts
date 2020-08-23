@@ -1,8 +1,8 @@
 import { ISelectionRange } from '../types';
 import { getNodeElement } from './getNodeElement';
+import { getRootElement } from './getRootElement';
 import { getStartAndEndOffsets } from './getStartAndEndOffsets';
 import { orderElements } from './orderElements';
-import { validateSelection } from './validateSelection';
 
 export function getSelectionRange(
   selection: Selection,
@@ -16,8 +16,8 @@ export function getSelectionRange(
   } = selection;
   const anchorElement = getNodeElement(anchorNode);
   const focusElement = getNodeElement(focusNode);
-  const isValidSelection = validateSelection(anchorElement, focusElement, selector);
-  if (!isValidSelection) {
+  const rootElement = getRootElement(anchorElement, focusElement, selector);
+  if (rootElement === null) {
     return null;
   }
   const [startElement, endElement] = orderElements(anchorElement, focusElement);
@@ -35,6 +35,7 @@ export function getSelectionRange(
     endOffset,
     focusNode,
     focusOffset,
+    rootElement,
     startElement,
     startOffset,
     text: selection.toString(),
