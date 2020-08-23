@@ -1,8 +1,8 @@
 import { getNodeElement } from '../getNodeElement';
+import { getRootElement } from '../getRootElement';
 import { getSelectionRange } from '../getSelectionRange';
 import { getStartAndEndOffsets } from '../getStartAndEndOffsets';
 import { orderElements } from '../orderElements';
-import { getRootElement } from '../getRootElement';
 
 jest.mock('../getNodeElement');
 jest.mock('../getStartAndEndOffsets');
