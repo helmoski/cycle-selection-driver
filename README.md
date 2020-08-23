@@ -65,6 +65,7 @@ A range of text selected by the user or the current position of the caret.
 * `endOffset` - Character offset relative to the `endElement` where the selection ends (matches or comes after the `startOffset`)
 * `focusNode` - The node where the user finished their selection
 * `focusOffset` - Character offset relative to the `focusNode` where the user finished their selection
+* `rootElement` - Root element for the selection based on the specified selector
 * `startElement` - Element where the selection starts (matches or comes before the `endElement`)
 * `startOffset` - Character offset relative to the `startElement` where the selection starts (matches or comes before the `endOffset`)
 * `text` - Selected text
