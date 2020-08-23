@@ -12,6 +12,7 @@ export interface ISelectionRange {
   endOffset: number;
   focusNode: Node;
   focusOffset: number;
+  rootElement: HTMLElement;
   startElement: HTMLElement;
   startOffset: number;
   text: string;
